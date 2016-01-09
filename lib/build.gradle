@@ -1,0 +1,6 @@
+version
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
