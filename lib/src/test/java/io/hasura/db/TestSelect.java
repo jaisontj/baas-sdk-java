@@ -17,7 +17,7 @@ public class TestSelect {
         List<FileRecord> fileRecords =
             rm
             .select(FILE_TABLE)
-            .columns(FILE_TABLE.ID, FILE_TABLE.FILENAME)
+            .columns(FILE_TABLE.ID, FILE_TABLE.FILENAME, FILE_TABLE.SERVER_PATH)
             .where(FILE_TABLE.ID.eq(3))
             .limit(10)
             .offset(0)

@@ -17,7 +17,7 @@ public class TestUpdate {
         UpdateResult<FileRecord> res =
             rm
             .update(FILE_TABLE)
-            .set(FILE_TABLE.FILENAME, "ahoy_ulman")
+            .setAndReturn(FILE_TABLE.FILENAME, "ahoy_ulman")
             .where(FILE_TABLE.FILENAME.eq("ahoy_ulman"))
             .execute();
         System.out.println(res.getCount());

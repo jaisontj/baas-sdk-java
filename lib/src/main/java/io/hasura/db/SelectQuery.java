@@ -11,7 +11,10 @@ import java.io.IOException;
 public class SelectQuery<R> {
 
     private static String url = "/api/1/table/";
-    private static Gson gson = new Gson();
+    private static Gson gson =
+        new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
 
     private JsonArray columns;
     private JsonObject whereExp;
@@ -29,9 +32,21 @@ public class SelectQuery<R> {
         this.rm = rm;
     }
 
+    public SelectQuery<R> columns(SelectField<R> f1) {
+        this.columns.add(f1.toQCol());
+        return this;
+    }
+
     public SelectQuery<R> columns(SelectField<R> f1, SelectField<R> f2) {
         this.columns.add(f1.toQCol());
         this.columns.add(f2.toQCol());
+        return this;
+    }
+
+    public SelectQuery<R> columns(SelectField<R> f1, SelectField<R> f2, SelectField<R> f3) {
+        this.columns.add(f1.toQCol());
+        this.columns.add(f2.toQCol());
+        this.columns.add(f3.toQCol());
         return this;
     }
 

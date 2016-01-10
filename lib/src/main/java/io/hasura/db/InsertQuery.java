@@ -14,7 +14,10 @@ import java.io.IOException;
 
 public class InsertQuery<R> {
     private static String url = "/api/1/table/";
-    private static Gson gson = new Gson();
+    private static Gson gson =
+        new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
 
     private JsonObject insObj;
     private Set<String> retSet;
