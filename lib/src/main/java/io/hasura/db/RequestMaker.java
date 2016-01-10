@@ -46,4 +46,8 @@ public class RequestMaker {
     public <R> UpdateQuery<R> update(Table<R> table) {
         return new UpdateQuery<R>(this, table);
     }
+
+    public <R> DeleteQuery<R> delete(Table<R> table) {
+        return new DeleteQuery<R>(this, table);
+    }
 }

@@ -25,6 +25,10 @@ class FileTable extends Table<FileRecord> {
         return new TypeToken<UpdateResult<FileRecord>>() {}.getType();
     }
 
+    public Type getDelResType() {
+        return new TypeToken<DeleteResult<FileRecord>>() {}.getType();
+    }
+
     public final PGField<FileRecord, String> SERVER_PATH = new PGField<>("server_path");
     public final PGField<FileRecord, String> FILENAME = new PGField<>("filename");
     public final PGField<FileRecord, Integer> ID = new PGField<>("id");
