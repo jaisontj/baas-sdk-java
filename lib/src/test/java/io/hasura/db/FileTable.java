@@ -27,7 +27,8 @@ class FileTable implements Table<FileRecord> {
         return new TypeToken<ArrayList<FileRecord>>(){}.getType();
     }
 
-    public final PGField<FileRecord, String> SERVER_PATH = new PGField<FileRecord, String>("server_path");
-    public final PGField<FileRecord, String> FILENAME = new PGField<FileRecord, String>("filename");
+    public final PGField<FileRecord, String> SERVER_PATH = new PGField<>("server_path");
+    public final PGField<FileRecord, String> FILENAME = new PGField<>("filename");
+    public final PGField<FileRecord, Integer> ID = new PGField<>("id");
 
 }

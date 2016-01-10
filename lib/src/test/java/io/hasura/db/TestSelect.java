@@ -17,10 +17,10 @@ public class TestSelect {
         List<FileRecord> fileRecords =
             rm
             .select(FILE_TABLE)
-            .columns(FILE_TABLE.SERVER_PATH, FILE_TABLE.FILENAME)
-            .where(FILE_TABLE.FILENAME.eq("img"))
+            .columns(FILE_TABLE.ID, FILE_TABLE.FILENAME)
+            .where(FILE_TABLE.ID.eq(3))
             .limit(10)
-            .offset(5)
+            .offset(0)
             .fetch();
         for (FileRecord fr : fileRecords)
             System.out.println(fr);
