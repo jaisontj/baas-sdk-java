@@ -2,11 +2,17 @@ package io.hasura.db;
 
 import java.lang.reflect.Type;
 
-public interface Table<R> {
+public abstract class Table<R> {
 
-    public String getTableName();
+    private String tableName;
+    public String getTableName() {
+        return this.tableName;
+    }
+    public Table(String tableName) {
+        this.tableName = tableName;
+    }
 
-    public Type getSingleType();
-    public Type getListType();
+    public abstract Type getInsResType();
+    public abstract Type getSelResType();
     // public static
 }

@@ -1,6 +1,8 @@
 package io.hasura.db;
 
 import com.google.gson.*;
+import com.google.gson.reflect.*;
+import java.lang.reflect.Type;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -59,8 +61,8 @@ public class SelectQuery<R> {
         if (this.offset != -1)
             query.add("offset", new JsonPrimitive(this.offset));
 
-        String tableSelUrl = url + table.getTableName() + "/select";
-        String response = rm.post(tableSelUrl, gson.toJson(query));
-        return gson.fromJson(response, table.getListType());
+        String opUrl = url + table.getTableName() + "/select";
+        String response = rm.post(opUrl, gson.toJson(query));
+        return gson.fromJson(response, table.getSelResType());
     }
 }

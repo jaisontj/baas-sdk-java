@@ -5,26 +5,20 @@ import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 
-class FileTable implements Table<FileRecord> {
+class FileTable extends Table<FileRecord> {
 
     public static final FileTable FILE_TABLE = new FileTable();
 
-    private String tableName;
-
     public FileTable() {
-        this.tableName = "file";
+        super("file");
     }
 
-    public String getTableName() {
-        return this.tableName;
+    public Type getInsResType() {
+        return new TypeToken<InsertResult<FileRecord>>() {}.getType();
     }
 
-    public Type getSingleType() {
-        return new TypeToken<FileRecord>(){}.getType();
-    }
-
-    public Type getListType() {
-        return new TypeToken<ArrayList<FileRecord>>(){}.getType();
+    public Type getSelResType() {
+        return new TypeToken<ArrayList<FileRecord>>() {}.getType();
     }
 
     public final PGField<FileRecord, String> SERVER_PATH = new PGField<>("server_path");

@@ -24,7 +24,9 @@ public class RequestMaker {
             .post(body)
             .build();
         Response response = client.newCall(request).execute();
-        return response.body().string();
+        String respStr = response.body().string();
+        System.out.println(respStr);
+        return respStr;
     }
 
     private String dbUrl;
@@ -35,5 +37,9 @@ public class RequestMaker {
 
     public <R> SelectQuery<R> select(Table<R> from) {
         return new SelectQuery<R>(this, from);
+    }
+
+    public <R> InsertQuery<R> insert(Table<R> into) {
+        return new InsertQuery<R>(this, into);
     }
 }

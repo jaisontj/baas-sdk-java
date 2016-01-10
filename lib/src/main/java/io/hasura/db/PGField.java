@@ -9,6 +9,10 @@ public class PGField<R, T> implements SelectField <R> {
 
     private String columnName;
 
+    public String getColumnName() {
+        return columnName;
+    }
+
     public PGField(String columnName) {
         this.columnName = columnName;
     }
