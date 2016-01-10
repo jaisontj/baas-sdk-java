@@ -19,6 +19,7 @@ public class TestUpdate {
             .update(FILE_TABLE)
             .setAndReturn(FILE_TABLE.FILENAME, "ahoy_ulman")
             .where(FILE_TABLE.FILENAME.eq("ahoy_ulman"))
+            .returning(FILE_TABLE.ID)
             .execute();
         System.out.println(res.getCount());
         System.out.println(res.getRecords());

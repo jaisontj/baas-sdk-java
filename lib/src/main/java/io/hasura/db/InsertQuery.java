@@ -43,6 +43,24 @@ public class InsertQuery<R> {
         return this;
     }
 
+    public <T1> InsertQuery<R> returning(PGField<R, T1> f1) {
+        this.retSet.add(f1.getColumnName());
+        return this;
+    }
+
+    public <T1, T2> InsertQuery<R> returning(PGField<R, T1> f1, PGField<R, T2> f2) {
+        this.retSet.add(f1.getColumnName());
+        this.retSet.add(f2.getColumnName());
+        return this;
+    }
+
+    public <T1, T2, T3> InsertQuery<R> returning(PGField<R, T1> f1, PGField<R, T2> f2, PGField<R, T3> f3) {
+        this.retSet.add(f1.getColumnName());
+        this.retSet.add(f2.getColumnName());
+        this.retSet.add(f3.getColumnName());
+        return this;
+    }
+
     public InsertResult<R> execute() throws IOException {
         /* Create the query object */
         JsonObject query = new JsonObject();
