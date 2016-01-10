@@ -1,6 +1,5 @@
 package io.hasura.db;
 
-import java.util.List;
 import java.lang.reflect.Type;
 
 public interface Table<R> {

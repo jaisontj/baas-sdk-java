@@ -15,9 +15,12 @@ public class RequestMaker {
     OkHttpClient client = new OkHttpClient();
 
     String post(String url, String json) throws IOException {
+        System.out.println(json);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
             .url(this.dbUrl + url)
+            .header("X-Hasura-Role", "admin")
+            .header("X-Hasura-User-Id", "0")
             .post(body)
             .build();
         Response response = client.newCall(request).execute();

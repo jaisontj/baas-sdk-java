@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class SelectQuery<R> {
 
-    private static String url = "/api/1/select/table/";
+    private static String url = "/api/1/table/";
     private static Gson gson = new Gson();
 
     private JsonArray columns;
@@ -48,7 +48,7 @@ public class SelectQuery<R> {
         return this;
     }
 
-    public List<R> execute() throws IOException {
+    public List<R> fetch() throws IOException {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("columns", this.columns);
@@ -59,7 +59,7 @@ public class SelectQuery<R> {
         if (this.offset != -1)
             query.add("offset", new JsonPrimitive(this.offset));
 
-        String tableSelUrl = url + table.getTableName();
+        String tableSelUrl = url + table.getTableName() + "/select";
         String response = rm.post(tableSelUrl, gson.toJson(query));
         return gson.fromJson(response, table.getListType());
     }

@@ -9,15 +9,21 @@ public class PGField<R, T> implements SelectField <R> {
 
     private String columnName;
 
+    public PGField(String columnName) {
+        this.columnName = columnName;
+    }
+
     public JsonElement toQCol() {
         return new JsonPrimitive(this.columnName);
     }
 
     private Condition<R> op(String opRepr, T val) {
-        JsonObject eqExp = new JsonObject();
         Type valType = new TypeToken<T>() {}.getType();
-        eqExp.add(opRepr, gson.toJsonTree(val, valType));
-        return new Condition<R>(eqExp);
+        JsonObject opExp = new JsonObject();
+        opExp.add(opRepr, gson.toJsonTree(val, valType));
+        JsonObject colExp = new JsonObject();
+        colExp.add(this.columnName, opExp);
+        return new Condition<R>(colExp);
     }
 
     public Condition<R> eq(T val) {
