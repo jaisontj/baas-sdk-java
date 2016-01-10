@@ -35,11 +35,15 @@ public class RequestMaker {
         this.dbUrl = dbUrl;
     }
 
-    public <R> SelectQuery<R> select(Table<R> from) {
-        return new SelectQuery<R>(this, from);
+    public <R> SelectQuery<R> select(Table<R> table) {
+        return new SelectQuery<R>(this, table);
     }
 
-    public <R> InsertQuery<R> insert(Table<R> into) {
-        return new InsertQuery<R>(this, into);
+    public <R> InsertQuery<R> insert(Table<R> table) {
+        return new InsertQuery<R>(this, table);
+    }
+
+    public <R> UpdateQuery<R> update(Table<R> table) {
+        return new UpdateQuery<R>(this, table);
     }
 }

@@ -14,5 +14,6 @@ public abstract class Table<R> {
 
     public abstract Type getInsResType();
     public abstract Type getSelResType();
+    public abstract Type getUpdResType();
     // public static
 }
