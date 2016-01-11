@@ -29,4 +29,12 @@ public abstract class QueryWithProjection<Q, R> {
         return fromColumns(this.columns);
     }
 
+    public Q columns(SelectField<R> f1, SelectField<R> f2, SelectField<R> f3, SelectField<R> f4) {
+        this.columns.add(f1.toQCol());
+        this.columns.add(f2.toQCol());
+        this.columns.add(f3.toQCol());
+        this.columns.add(f4.toQCol());
+        return fromColumns(this.columns);
+    }
+
 }
