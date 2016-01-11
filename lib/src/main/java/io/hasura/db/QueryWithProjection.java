@@ -2,12 +2,12 @@ package io.hasura.db;
 
 import com.google.gson.*;
 
-public abstract class QueryWithProject<Q, R> {
+public abstract class QueryWithProjection<Q, R> {
     protected JsonArray columns;
 
     public abstract Q fromColumns(JsonArray columns);
 
-    public QueryWithProject() {
+    public QueryWithProjection() {
         this.columns = new JsonArray();
     }
 

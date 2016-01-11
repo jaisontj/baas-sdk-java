@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
 
-public class SelectQuery<R> extends QueryWithProject<SelectQuery<R>, R> {
+public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
     private static String url = "/api/1/table/";
     private static Gson gson =
