@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
 
-public class SelectQuery<R> {
+public class SelectQuery<R> extends QueryWithProject<SelectQuery<R>, R> {
 
     private static String url = "/api/1/table/";
     private static Gson gson =
@@ -16,38 +16,25 @@ public class SelectQuery<R> {
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
 
-    private JsonArray columns;
     private JsonObject whereExp;
     private int limit;
     private int offset;
     private RequestMaker rm;
 
     private Table<R> table;
+
+    public SelectQuery<R> fromColumns(JsonArray columns) {
+        this.columns = columns;
+        return this;
+    }
+
     public SelectQuery(RequestMaker rm, Table<R> table) {
-        this.columns  = new JsonArray();
+        super();
         this.whereExp = null;
         this.limit = -1;
         this.offset = -1;
         this.table = table;
         this.rm = rm;
-    }
-
-    public SelectQuery<R> columns(SelectField<R> f1) {
-        this.columns.add(f1.toQCol());
-        return this;
-    }
-
-    public SelectQuery<R> columns(SelectField<R> f1, SelectField<R> f2) {
-        this.columns.add(f1.toQCol());
-        this.columns.add(f2.toQCol());
-        return this;
-    }
-
-    public SelectQuery<R> columns(SelectField<R> f1, SelectField<R> f2, SelectField<R> f3) {
-        this.columns.add(f1.toQCol());
-        this.columns.add(f2.toQCol());
-        this.columns.add(f3.toQCol());
-        return this;
     }
 
     public SelectQuery<R> where(Condition<R> c) {
