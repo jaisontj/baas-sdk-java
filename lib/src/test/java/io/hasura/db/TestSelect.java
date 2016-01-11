@@ -1,6 +1,6 @@
 package io.hasura.db;
 
-import static io.hasura.db.FileTable.FILE_TABLE;
+import static io.hasura.db.File.FILE;
 
 import io.hasura.db.RequestMaker;
 
@@ -16,9 +16,9 @@ public class TestSelect {
         RequestMaker rm = new RequestMaker("http://localhost:8080");
         List<FileRecord> fileRecords =
             rm
-            .select(FILE_TABLE)
-            .columns(FILE_TABLE.ID, FILE_TABLE.FILENAME, FILE_TABLE.SERVER_PATH)
-            .where(FILE_TABLE.ID.eq(3))
+            .select(FILE)
+            .columns(FILE.ID, FILE.FILENAME, FILE.SERVER_PATH)
+            .where(FILE.ID.eq(3))
             .limit(10)
             .offset(0)
             .fetch();

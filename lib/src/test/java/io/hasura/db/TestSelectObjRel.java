@@ -1,6 +1,6 @@
 package io.hasura.db;
 
-import static io.hasura.db.FileTable.FILE_TABLE;
+import static io.hasura.db.File.FILE;
 import static io.hasura.db.FakUser.FAK_USER;
 
 import io.hasura.db.RequestMaker;
@@ -22,7 +22,7 @@ public class TestSelectObjRel {
                FAK_USER.EMAIL,
                FAK_USER.ID,
                FAK_USER.TM_ID,
-               FAK_USER.PROFILE_PIC.columns(FILE_TABLE.ID, FILE_TABLE.SERVER_PATH)
+               FAK_USER.PROFILE_PIC.columns(FILE.ID, FILE.SERVER_PATH)
                )
             .fetch();
         for (FakUserRecord fr : userRecords)

@@ -5,11 +5,11 @@ import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 
-class FileTable extends Table<FileRecord> {
+class File extends Table<FileRecord> {
 
-    public static final FileTable FILE_TABLE = new FileTable();
+    public static final File FILE = new File();
 
-    public FileTable() {
+    public File() {
         super("file");
     }
 

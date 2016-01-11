@@ -1,6 +1,6 @@
 package io.hasura.db;
 
-import static io.hasura.db.FileTable.FILE_TABLE;
+import static io.hasura.db.File.FILE;
 
 import io.hasura.db.RequestMaker;
 
@@ -16,9 +16,9 @@ public class TestDelete {
         RequestMaker rm = new RequestMaker("http://localhost:8080");
         DeleteResult<FileRecord> res =
             rm
-            .delete(FILE_TABLE)
-            .where(FILE_TABLE.FILENAME.eq("for_delete"))
-            .returning(FILE_TABLE.ID)
+            .delete(FILE)
+            .where(FILE.FILENAME.eq("for_delete"))
+            .returning(FILE.ID)
             .execute();
         System.out.println(res.getCount());
         System.out.println(res.getRecords());

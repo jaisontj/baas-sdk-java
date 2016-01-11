@@ -1,6 +1,6 @@
 package io.hasura.db;
 
-import static io.hasura.db.FileTable.FILE_TABLE;
+import static io.hasura.db.File.FILE;
 
 import io.hasura.db.RequestMaker;
 
@@ -16,9 +16,9 @@ public class TestInsert {
         RequestMaker rm = new RequestMaker("http://localhost:8080");
         InsertResult <FileRecord> res =
             rm
-            .insert(FILE_TABLE)
-            .set(FILE_TABLE.FILENAME, "ahoy_ulman")
-            .setAndReturn(FILE_TABLE.SERVER_PATH, "home/root/")
+            .insert(FILE)
+            .set(FILE.FILENAME, "ahoy_ulman")
+            .setAndReturn(FILE.SERVER_PATH, "home/root/")
             .execute();
         System.out.println(res.getCount());
         System.out.println(res.getRecord());
