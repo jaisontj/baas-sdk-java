@@ -2,16 +2,16 @@ package io.hasura.db;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class FileRecord {
+public class ReviewRecord {
 
-    private String filename;
-    private String serverPath;
+    private Integer rating;
     private Integer id;
+    private Boolean isActive;
 
-    public FileRecord(Integer id, String filename, String serverPath) {
+    public ReviewRecord(Integer rating, Integer id, Boolean isActive) {
+        this.rating = rating;
         this.id = id;
-        this.filename = filename;
-        this.serverPath = serverPath;
+        this.isActive = isActive;
     }
 
     public String toString() {
