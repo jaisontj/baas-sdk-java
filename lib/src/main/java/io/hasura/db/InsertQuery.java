@@ -19,7 +19,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         .create();
 
     private JsonObject insObj;
-    private RequestMaker rm;
+    private DBService rm;
     private Table<R> table;
 
     public InsertQuery<R> fromRetSet(HashSet<String> retSet) {
@@ -27,7 +27,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         return this;
     }
 
-    public InsertQuery(RequestMaker rm, Table<R> table) {
+    public InsertQuery(DBService rm, Table<R> table) {
         super();
         this.insObj = new JsonObject();
         this.table = table;

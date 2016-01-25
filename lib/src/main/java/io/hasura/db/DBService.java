@@ -6,9 +6,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import io.hasura.core.*;
+
+import java.lang.reflect.Type;
 import java.io.IOException;
 
-public class RequestMaker {
+public class DBService {
     public static final MediaType JSON
         = MediaType.parse("application/json; charset=utf-8");
 
@@ -31,8 +34,19 @@ public class RequestMaker {
 
     private String dbUrl;
 
-    public RequestMaker(String dbUrl) {
+    public DBService(String dbUrl) {
         this.dbUrl = dbUrl;
+    }
+
+    public <T> Call<T> mkCall(String url, String jsonBody, Type bodyType) {
+        RequestBody reqBody = RequestBody.create(JSON, jsonBody);
+        Request request = new Request.Builder()
+            .url(this.dbUrl + url)
+            .header("X-Hasura-Role", "admin")
+            .header("X-Hasura-User-Id", "0")
+            .post(reqBody)
+            .build();
+        return new Call<>(client.newCall(request), bodyType);
     }
 
     public <R> SelectQuery<R> select(Table<R> table) {

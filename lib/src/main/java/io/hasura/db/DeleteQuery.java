@@ -18,7 +18,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
     private JsonObject whereExp;
-    private RequestMaker rm;
+    private DBService rm;
     private Table<R> table;
 
     public DeleteQuery<R> fromRetSet(HashSet<String> retSet) {
@@ -26,7 +26,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         return this;
     }
 
-    public DeleteQuery(RequestMaker rm, Table<R> table) {
+    public DeleteQuery(DBService rm, Table<R> table) {
         super();
         this.whereExp = null;
         this.table = table;

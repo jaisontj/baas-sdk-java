@@ -19,15 +19,15 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         .create();
     private JsonObject updObj;
     private JsonObject whereExp;
-    private RequestMaker rm;
+    private DBService db;
     private Table<R> table;
 
-    public UpdateQuery(RequestMaker rm, Table<R> table) {
+    public UpdateQuery(DBService db, Table<R> table) {
         super();
         this.updObj = new JsonObject();
         this.whereExp = null;
         this.table = table;
-        this.rm = rm;
+        this.db = db;
     }
 
     public UpdateQuery<R> fromRetSet(HashSet<String> retSet) {
@@ -67,7 +67,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         }
 
         String opUrl = url + table.getTableName() + "/update";
-        String response = rm.post(opUrl, gson.toJson(query));
+        String response = db.post(opUrl, gson.toJson(query));
         return gson.fromJson(response, table.getUpdResType());
     }
 }

@@ -2,7 +2,7 @@ package io.hasura.db;
 
 import static io.hasura.db.File.FILE;
 
-import io.hasura.db.RequestMaker;
+import io.hasura.db.DBService;
 
 import org.junit.Test;
 import java.util.List;
@@ -13,9 +13,9 @@ public class TestInsert {
     @Test
     public void run() throws IOException {
 
-        RequestMaker rm = new RequestMaker("http://localhost:8080");
+        DBService db = new DBService("http://localhost:8080");
         InsertResult <FileRecord> res =
-            rm
+            db
             .insert(FILE)
             .set(FILE.FILENAME, "ahoy_ulman")
             .setAndReturn(FILE.SERVER_PATH, "home/root/")

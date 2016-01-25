@@ -1,5 +1,6 @@
 package io.hasura.db;
 
+import io.hasura.core.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
     private JsonObject whereExp;
     private int limit;
     private int offset;
-    private RequestMaker rm;
+    private DBService db;
 
     private Table<R> table;
 
@@ -28,13 +29,13 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
         return this;
     }
 
-    public SelectQuery(RequestMaker rm, Table<R> table) {
+    public SelectQuery(DBService db, Table<R> table) {
         super();
         this.whereExp = null;
         this.limit = -1;
         this.offset = -1;
         this.table = table;
-        this.rm = rm;
+        this.db = db;
     }
 
     public SelectQuery<R> where(Condition<R> c) {
@@ -52,7 +53,7 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
         return this;
     }
 
-    public List<R> fetch() throws IOException {
+    public Call<List<R>> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("columns", this.columns);
@@ -64,7 +65,6 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
             query.add("offset", new JsonPrimitive(this.offset));
 
         String opUrl = url + table.getTableName() + "/select";
-        String response = rm.post(opUrl, gson.toJson(query));
-        return gson.fromJson(response, table.getSelResType());
+        return db.mkCall(opUrl, gson.toJson(query), table.getSelResType());
     }
 }
