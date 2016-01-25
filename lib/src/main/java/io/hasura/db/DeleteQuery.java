@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.io.IOException;
 
 public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
-    private static String url = "/api/1/table/";
     private static Gson gson =
         new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -52,7 +51,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
             query.add("returning", retArr);
         }
 
-        String opUrl = url + table.getTableName() + "/delete";
+        String opUrl = "/table/" + table.getTableName() + "/delete";
         return db.mkCall(opUrl, gson.toJson(query), table.getDelResType());
     }
 }

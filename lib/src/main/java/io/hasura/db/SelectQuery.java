@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
-    private static String url = "/api/1/table/";
     private static Gson gson =
         new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -64,7 +63,7 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
         if (this.offset != -1)
             query.add("offset", new JsonPrimitive(this.offset));
 
-        String opUrl = url + table.getTableName() + "/select";
+        String opUrl = "/table/" + table.getTableName() + "/select";
         return db.mkCall(opUrl, gson.toJson(query), table.getSelResType());
     }
 }

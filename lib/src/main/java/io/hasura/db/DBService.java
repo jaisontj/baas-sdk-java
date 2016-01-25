@@ -15,35 +15,19 @@ public class DBService {
     public static final MediaType JSON
         = MediaType.parse("application/json; charset=utf-8");
 
-    OkHttpClient client = new OkHttpClient();
-
-    String post(String url, String json) throws IOException {
-        System.out.println(json);
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-            .url(this.dbUrl + url)
-            .header("X-Hasura-Role", "admin")
-            .header("X-Hasura-User-Id", "0")
-            .post(body)
-            .build();
-        Response response = client.newCall(request).execute();
-        String respStr = response.body().string();
-        System.out.println(respStr);
-        return respStr;
-    }
+    private OkHttpClient client;
 
     private String dbUrl;
 
-    public DBService(String dbUrl) {
-        this.dbUrl = dbUrl;
+    public DBService(String dbUrl, OkHttpClient client) {
+        this.dbUrl  = dbUrl;
+        this.client = client;
     }
 
     public <T> Call<T> mkCall(String url, String jsonBody, Type bodyType) {
         RequestBody reqBody = RequestBody.create(JSON, jsonBody);
         Request request = new Request.Builder()
-            .url(this.dbUrl + url)
-            .header("X-Hasura-Role", "admin")
-            .header("X-Hasura-User-Id", "0")
+            .url(this.dbUrl + "/api/db" + url)
             .post(reqBody)
             .build();
         return new Call<>(client.newCall(request), bodyType);

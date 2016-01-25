@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.io.IOException;
 
 public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
-    private static String url = "/api/1/table/";
     private static Gson gson =
         new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -56,7 +55,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
             retArr.add(new JsonPrimitive(retCol));
         query.add("returning", retArr);
 
-        String opUrl = url + table.getTableName() + "/insert";
+        String opUrl = "/table/" + table.getTableName() + "/insert";
         return db.mkCall(opUrl, gson.toJson(query), table.getInsResType());
     }
 }
