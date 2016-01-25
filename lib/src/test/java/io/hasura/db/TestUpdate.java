@@ -14,7 +14,8 @@ public class TestUpdate {
     @Test
     public void run() throws IOException, HasuraException {
 
-        DBService db = new DBService("http://localhost:8080");
+        AuthService authService = new AuthService("http://104.155.219.208");
+        DBService db = new DBService(authService.getUrl(), authService.getClient());
         UpdateResult<FileRecord> res =
             db
             .update(FILE)
