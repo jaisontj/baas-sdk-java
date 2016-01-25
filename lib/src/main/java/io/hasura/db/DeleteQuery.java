@@ -1,5 +1,6 @@
 package io.hasura.db;
 
+import io.hasura.core.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.lang.reflect.Type;
@@ -18,7 +19,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
     private JsonObject whereExp;
-    private DBService rm;
+    private DBService db;
     private Table<R> table;
 
     public DeleteQuery<R> fromRetSet(HashSet<String> retSet) {
@@ -26,11 +27,11 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         return this;
     }
 
-    public DeleteQuery(DBService rm, Table<R> table) {
+    public DeleteQuery(DBService db, Table<R> table) {
         super();
         this.whereExp = null;
         this.table = table;
-        this.rm = rm;
+        this.db = db;
     }
 
     public DeleteQuery<R> where(Condition<R> c) {
@@ -38,7 +39,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         return this;
     }
 
-    public DeleteResult<R> execute() throws IOException {
+    public Call<DeleteResult<R>> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         if (this.whereExp != null)
@@ -52,7 +53,6 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         }
 
         String opUrl = url + table.getTableName() + "/delete";
-        String response = rm.post(opUrl, gson.toJson(query));
-        return gson.fromJson(response, table.getDelResType());
+        return db.mkCall(opUrl, gson.toJson(query), table.getDelResType());
     }
 }

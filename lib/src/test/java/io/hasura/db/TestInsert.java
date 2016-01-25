@@ -1,6 +1,7 @@
 package io.hasura.db;
 
 import static io.hasura.db.File.FILE;
+import io.hasura.core.*;
 
 import io.hasura.db.DBService;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
 public class TestInsert {
 
     @Test
-    public void run() throws IOException {
+    public void run() throws IOException, HasuraException {
 
         DBService db = new DBService("http://localhost:8080");
         InsertResult <FileRecord> res =
@@ -19,6 +20,7 @@ public class TestInsert {
             .insert(FILE)
             .set(FILE.FILENAME, "ahoy_ulman")
             .setAndReturn(FILE.SERVER_PATH, "home/root/")
+            .build()
             .execute();
         System.out.println(res.getCount());
         System.out.println(res.getRecord());

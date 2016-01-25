@@ -1,5 +1,6 @@
 package io.hasura.db;
 
+import io.hasura.core.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.lang.reflect.Type;
@@ -52,7 +53,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         return this;
     }
 
-    public UpdateResult<R> execute() throws IOException {
+    public Call<UpdateResult<R>> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("values", this.updObj);
@@ -67,7 +68,6 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         }
 
         String opUrl = url + table.getTableName() + "/update";
-        String response = db.post(opUrl, gson.toJson(query));
-        return gson.fromJson(response, table.getUpdResType());
+        return db.mkCall(opUrl, gson.toJson(query), table.getUpdResType());
     }
 }

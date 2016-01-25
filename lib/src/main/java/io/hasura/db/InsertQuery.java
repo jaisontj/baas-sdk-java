@@ -1,5 +1,6 @@
 package io.hasura.db;
 
+import io.hasura.core.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         .create();
 
     private JsonObject insObj;
-    private DBService rm;
+    private DBService db;
     private Table<R> table;
 
     public InsertQuery<R> fromRetSet(HashSet<String> retSet) {
@@ -27,11 +28,11 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         return this;
     }
 
-    public InsertQuery(DBService rm, Table<R> table) {
+    public InsertQuery(DBService db, Table<R> table) {
         super();
         this.insObj = new JsonObject();
         this.table = table;
-        this.rm = rm;
+        this.db = db;
     }
 
     public <T> InsertQuery<R> set(PGField<R, T> fld, T val) {
@@ -46,7 +47,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         return this;
     }
 
-    public InsertResult<R> execute() throws IOException {
+    public Call<InsertResult<R>> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("object", this.insObj);
@@ -56,7 +57,6 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         query.add("returning", retArr);
 
         String opUrl = url + table.getTableName() + "/insert";
-        String response = rm.post(opUrl, gson.toJson(query));
-        return gson.fromJson(response, table.getInsResType());
+        return db.mkCall(opUrl, gson.toJson(query), table.getInsResType());
     }
 }
