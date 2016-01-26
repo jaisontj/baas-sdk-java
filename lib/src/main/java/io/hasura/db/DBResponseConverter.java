@@ -29,6 +29,9 @@ public class DBResponseConverter<T> implements Converter<T, DBException> {
                 case 401:
                     errCode = DBError.UNAUTHORIZED;
                     break;
+                case 402:
+                    errCode = DBError.REQUEST_FAILED;
+                    break;
                 case 403:
                     errCode = DBError.INVALID_SESSION;
                     break;
