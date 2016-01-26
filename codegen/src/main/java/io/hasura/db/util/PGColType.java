@@ -16,7 +16,7 @@ public enum PGColType {
     PG_DOUBLE      ("Double"),
 
     @SerializedName("numeric")
-    PG_NUMERIC     ("Numeric"),
+    PG_NUMERIC     ("BigDecimal"),
 
     @SerializedName("boolean")
     PG_BOOLEAN     ("Boolean"),

@@ -182,6 +182,8 @@ public class GenerationUtil {
         writer.println();
         writer.println("import com.google.gson.annotations.SerializedName;");
         writer.println("import java.util.ArrayList;");
+        writer.println("import java.math.BigDecimal;");
+        writer.println("import java.sql.Timestamp;");
         writer.println();
 
         writer.printf("public class %sRecord {\n", clsName);
@@ -233,6 +235,11 @@ public class GenerationUtil {
         writer.println("import com.google.gson.reflect.*;");
         writer.println("import java.lang.reflect.Type;");
         writer.println("import java.util.ArrayList;");
+        writer.println("import java.math.BigDecimal;");
+        writer.println("import java.sql.Timestamp;");
+        writer.println("import io.hasura.db.*;");
+
+        writer.printf("import %s.records.*;", tablePkgName);
         writer.println();
 
         writer.printf("public class %s extends Table<%sRecord> {\n", clsName, clsName);
