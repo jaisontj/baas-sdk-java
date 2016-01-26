@@ -6,19 +6,6 @@ import java.lang.reflect.Type;
 
 public class SelectConverter<T> implements Converter<T, SelectException> {
 
-    static class AuthError {
-        private int code;
-        private String message;
-
-        public int getCode() {
-            return this.code;
-        }
-
-        public String getMessage() {
-            return this.message;
-        }
-    }
-
     private final Type resType;
     public SelectConverter(Type resType) {
         this.resType = resType;
@@ -33,8 +20,8 @@ public class SelectConverter<T> implements Converter<T, SelectException> {
                 return Util.parseJson(response, resType);
             }
             else {
-                AuthError err = Util.parseJson(response, AuthError.class);
-                throw new HasuraJsonException(code, err.getMessage());
+                DBErrorResponse err = Util.parseJson(response, DBErrorResponse.class);
+                throw new SelectException(1, err.getError());
             }
         }
         catch (HasuraJsonException e) {
