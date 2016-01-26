@@ -3,7 +3,7 @@ package io.hasura.db;
 import static io.hasura.db.File.FILE;
 
 import io.hasura.db.DBService;
-import io.hasura.core.*;
+import io.hasura.auth.*;
 
 import org.junit.Test;
 import java.util.List;

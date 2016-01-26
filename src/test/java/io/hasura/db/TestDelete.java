@@ -1,5 +1,5 @@
 package io.hasura.db;
-import io.hasura.core.*;
+import io.hasura.auth.*;
 
 import static io.hasura.db.File.FILE;
 

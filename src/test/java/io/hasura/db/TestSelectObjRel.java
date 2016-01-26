@@ -4,7 +4,7 @@ import static io.hasura.db.File.FILE;
 import static io.hasura.db.FakUser.FAK_USER;
 
 import io.hasura.db.DBService;
-import io.hasura.core.*;
+import io.hasura.auth.*;
 
 import org.junit.Test;
 import java.util.List;

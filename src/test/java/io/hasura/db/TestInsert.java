@@ -1,7 +1,7 @@
 package io.hasura.db;
 
 import static io.hasura.db.File.FILE;
-import io.hasura.core.*;
+import io.hasura.auth.*;
 
 import io.hasura.db.DBService;
 
