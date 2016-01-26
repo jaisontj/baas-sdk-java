@@ -13,7 +13,7 @@ import java.io.IOException;
 public class TestSelectArrRel {
 
     @Test
-    public void run() throws IOException, SelectException {
+    public void run() throws IOException, DBException {
 
         AuthService authService = new AuthService("http://104.155.219.208");
         DBService db = new DBService(authService.getUrl(), authService.getClient());

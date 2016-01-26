@@ -1,31 +1,31 @@
 package io.hasura.db;
 
-public class SelectException extends Exception {
+public class DBException extends Exception {
   private static final long serialVersionUID = 1;
-  private SelectError code;
+  private DBError code;
 
   /**
-   * Construct a new SelectException with a particular error code.
+   * Construct a new DBException with a particular error code.
    *
    * @param theCode
    *          The error code to identify the type of exception.
    * @param theMessage
    *          A message describing the error in more detail.
    */
-  public SelectException(SelectError theCode, String theMessage) {
+  public DBException(DBError theCode, String theMessage) {
     super(theMessage);
     code = theCode;
   }
 
   /**
-   * Construct a new SelectException with a particular error code.
+   * Construct a new DBException with a particular error code.
    *
    * @param theCode
    *          The error code to identify the type of exception.
    * @param cause
    *          The cause of the error.
    */
-  public SelectException(SelectError theCode, Throwable cause) {
+  public DBException(DBError theCode, Throwable cause) {
     super(cause);
     code = theCode;
   }
@@ -35,7 +35,7 @@ public class SelectException extends Exception {
    *
    * @return The code for this error.
    */
-  public SelectError getCode() {
+  public DBError getCode() {
     return code;
   }
 }

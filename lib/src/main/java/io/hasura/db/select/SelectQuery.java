@@ -52,7 +52,7 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
         return this;
     }
 
-    public Call<List<R>, SelectException> build() {
+    public Call<List<R>, DBException> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("columns", this.columns);
@@ -64,6 +64,6 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
             query.add("offset", new JsonPrimitive(this.offset));
 
         String opUrl = "/table/" + table.getTableName() + "/select";
-        return db.mkCall(opUrl, gson.toJson(query), new SelectConverter<>(table.getSelResType()));
+        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<>(table.getSelResType()));
     }
 }

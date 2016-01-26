@@ -4,15 +4,15 @@ import io.hasura.core.*;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-public class SelectConverter<T> implements Converter<T, SelectException> {
+public class DBResponseConverter<T> implements Converter<T, DBException> {
 
     private final Type resType;
-    public SelectConverter(Type resType) {
+    public DBResponseConverter(Type resType) {
         this.resType = resType;
     }
 
     @Override
-    public T fromResponse(okhttp3.Response response) throws SelectException {
+    public T fromResponse(okhttp3.Response response) throws DBException {
         int code = response.code();
 
         try {
@@ -21,39 +21,39 @@ public class SelectConverter<T> implements Converter<T, SelectException> {
             }
             else {
                 DBErrorResponse err = Util.parseJson(response, DBErrorResponse.class);
-                SelectError errCode;
+                DBError errCode;
                 switch (code) {
                 case 400:
-                    errCode = SelectError.BAD_REQUEST;
+                    errCode = DBError.BAD_REQUEST;
                     break;
                 case 401:
-                    errCode = SelectError.UNAUTHORIZED;
+                    errCode = DBError.UNAUTHORIZED;
                     break;
                 case 403:
-                    errCode = SelectError.INVALID_SESSION;
+                    errCode = DBError.INVALID_SESSION;
                     break;
                 case 500:
-                    errCode = SelectError.INTERNAL_ERROR;
+                    errCode = DBError.INTERNAL_ERROR;
                     break;
                 default:
-                    errCode = SelectError.UNEXPECTED_CODE;
+                    errCode = DBError.UNEXPECTED_CODE;
                     break;
                 }
-                throw new SelectException(errCode, err.getError());
+                throw new DBException(errCode, err.getError());
             }
         }
         catch (HasuraJsonException e) {
-            throw new SelectException(SelectError.INTERNAL_ERROR, e);
+            throw new DBException(DBError.INTERNAL_ERROR, e);
         }
     }
 
     @Override
-    public SelectException fromIOException(IOException e) {
-        return new SelectException(SelectError.CONNECTION_ERROR, e);
+    public DBException fromIOException(IOException e) {
+        return new DBException(DBError.CONNECTION_ERROR, e);
     }
 
     @Override
-    public SelectException castException(Exception e) {
-        return (SelectException) e;
+    public DBException castException(Exception e) {
+        return (DBException) e;
     }
 }

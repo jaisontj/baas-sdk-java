@@ -52,7 +52,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         return this;
     }
 
-    public Call<UpdateResult<R>, UpdateException> build() {
+    public Call<UpdateResult<R>, DBException> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("values", this.updObj);
@@ -67,6 +67,6 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         }
 
         String opUrl = "/table/" + table.getTableName() + "/update";
-        return db.mkCall(opUrl, gson.toJson(query), new UpdateConverter<>(table.getUpdResType()));
+        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<>(table.getUpdResType()));
     }
 }

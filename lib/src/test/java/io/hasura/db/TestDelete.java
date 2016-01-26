@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TestDelete {
 
     @Test
-    public void run() throws IOException, DeleteException {
+    public void run() throws IOException, DBException {
 
         // DBService db = new DBService("http://localhost:8080");
         AuthService authService = new AuthService("http://104.155.219.208");

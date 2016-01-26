@@ -1,6 +1,6 @@
 package io.hasura.db;
 
-public enum SelectError {
+public enum DBError {
     INVALID_SESSION,
     UNAUTHORIZED,
     BAD_REQUEST,

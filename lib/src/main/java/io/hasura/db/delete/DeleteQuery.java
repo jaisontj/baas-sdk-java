@@ -38,7 +38,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         return this;
     }
 
-    public Call<DeleteResult<R>, DeleteException> build() {
+    public Call<DeleteResult<R>, DBException> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         if (this.whereExp != null)
@@ -52,6 +52,6 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         }
 
         String opUrl = "/table/" + table.getTableName() + "/delete";
-        return db.mkCall(opUrl, gson.toJson(query), new DeleteConverter<>(table.getDelResType()));
+        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<>(table.getDelResType()));
     }
 }

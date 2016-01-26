@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TestSelect {
 
     @Test
-    public void run() throws IOException, SelectException {
+    public void run() throws IOException, DBException {
 
         // DBService db = new DBService("http://localhost:8080");
         AuthService authService = new AuthService("http://104.155.219.208");
