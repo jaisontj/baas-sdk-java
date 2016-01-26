@@ -13,6 +13,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.util.Set;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
@@ -312,6 +313,30 @@ public class GenerationUtil {
         return new DBInfo(gson.fromJson(respStr, tabInfoListType));
     }
 
+    public static void generateTablesJava(String dir, String pkgName, List<String> tableNames) throws IOException {
+
+        String fileName = "Tables.java";
+
+        PrintWriter writer = new PrintWriter(new File(dir, fileName), "UTF-8");
+        writer.printf("package %s;\n", pkgName);
+
+        writer.println();
+        writer.printf("import %s.tables.*;\n", pkgName);
+        writer.println();
+
+        writer.println("public class Tables {\n");
+
+        for (String tableName : tableNames) {
+            String clsName = toClassName(tableName);
+            String staticVarName = toStaticVarName(tableName);
+            writer.printf("    public static final %s %s = %s.tables.%s.%s;\n", clsName, staticVarName, pkgName, clsName, staticVarName);
+            writer.println();
+        }
+        writer.println("}");
+        writer.close();
+
+    }
+
     public static void generate(Configuration cfg) throws IOException {
         DBInfo dbInfo = fetchDBInfo(cfg.getDBUrl());
 
@@ -321,10 +346,13 @@ public class GenerationUtil {
         File recordsDir = new File(tablesDir, "records");
         recordsDir.mkdir();
 
+        List<String> tableNames = new ArrayList<String>();
         for (TableInfo tableInfo : dbInfo.getTables()) {
+            tableNames.add(tableInfo.getTableName());
             System.out.println(tableInfo.getTableName());
             generateTable(tablesDir, cfg.getPackageName(), tableInfo);
             generateRecord(recordsDir, cfg.getPackageName(), tableInfo);
         }
+        generateTablesJava(cfg.getDir(), cfg.getPackageName(), tableNames);
     }
 }

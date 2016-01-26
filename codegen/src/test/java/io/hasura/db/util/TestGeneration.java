@@ -11,7 +11,7 @@ public class TestGeneration {
 
         Configuration cfg = new Configuration("http://localhost:8080",
                                               "io.fak.db",
-                                              "."
+                                              "ws"
                                               );
         GenerationUtil.generate(cfg);
     }
