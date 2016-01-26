@@ -12,35 +12,50 @@ import java.util.HashSet;
 
 import java.io.IOException;
 
-public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
+public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
     private static Gson gson =
         new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
+    private JsonObject updObj;
     private JsonObject whereExp;
     private DBService db;
     private Table<R> table;
 
-    public DeleteQuery<R> fromRetSet(HashSet<String> retSet) {
-        this.retSet = retSet;
-        return this;
-    }
-
-    public DeleteQuery(DBService db, Table<R> table) {
+    public UpdateQuery(DBService db, Table<R> table) {
         super();
+        this.updObj = new JsonObject();
         this.whereExp = null;
         this.table = table;
         this.db = db;
     }
 
-    public DeleteQuery<R> where(Condition<R> c) {
+    public UpdateQuery<R> fromRetSet(HashSet<String> retSet) {
+        this.retSet = retSet;
+        return this;
+    }
+
+    public <T> UpdateQuery<R> set(PGField<R, T> fld, T val) {
+        Type valType = new TypeToken<T>() {}.getType();
+        this.updObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
+        return this;
+    }
+
+    public <T> UpdateQuery<R> setAndReturn(PGField<R, T> fld, T value) {
+        this.set(fld, value);
+        this.returning(fld);
+        return this;
+    }
+
+    public UpdateQuery<R> where(Condition<R> c) {
         this.whereExp = c.getBoolExp();
         return this;
     }
 
-    public Call<DeleteResult<R>> build() {
+    public Call<UpdateResult<R>, UpdateException> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
+        query.add("values", this.updObj);
         if (this.whereExp != null)
             query.add("where", this.whereExp);
 
@@ -51,7 +66,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
             query.add("returning", retArr);
         }
 
-        String opUrl = "/table/" + table.getTableName() + "/delete";
-        return db.mkCall(opUrl, gson.toJson(query), table.getDelResType());
+        String opUrl = "/table/" + table.getTableName() + "/update";
+        return db.mkCall(opUrl, gson.toJson(query), new UpdateConverter<>(table.getUpdResType()));
     }
 }

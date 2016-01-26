@@ -13,7 +13,7 @@ import java.io.IOException;
 public class TestSelectObjRel {
 
     @Test
-    public void run() throws IOException, HasuraException {
+    public void run() throws IOException, SelectException {
 
         // DBService db = new DBService("http://localhost:8080");
         AuthService authService = new AuthService("http://104.155.219.208");

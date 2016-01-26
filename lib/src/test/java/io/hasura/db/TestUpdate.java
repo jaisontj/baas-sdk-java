@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TestUpdate {
 
     @Test
-    public void run() throws IOException, HasuraException {
+    public void run() throws IOException, UpdateException {
 
         AuthService authService = new AuthService("http://104.155.219.208");
         DBService db = new DBService(authService.getUrl(), authService.getClient());

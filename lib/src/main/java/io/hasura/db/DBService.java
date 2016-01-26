@@ -24,13 +24,13 @@ public class DBService {
         this.client = client;
     }
 
-    public <T> Call<T> mkCall(String url, String jsonBody, Type bodyType) {
+    public <T, E extends Exception> Call<T, E> mkCall(String url, String jsonBody, Converter<T, E> converter) {
         RequestBody reqBody = RequestBody.create(JSON, jsonBody);
         Request request = new Request.Builder()
             .url(this.dbUrl + "/api/db" + url)
             .post(reqBody)
             .build();
-        return new Call<>(client.newCall(request), bodyType);
+        return new Call<>(client.newCall(request), converter);
     }
 
     public <R> SelectQuery<R> select(Table<R> table) {

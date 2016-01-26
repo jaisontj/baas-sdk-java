@@ -46,7 +46,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         return this;
     }
 
-    public Call<InsertResult<R>> build() {
+    public Call<InsertResult<R>, InsertException> build() {
         /* Create the query object */
         JsonObject query = new JsonObject();
         query.add("object", this.insObj);
@@ -56,6 +56,6 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         query.add("returning", retArr);
 
         String opUrl = "/table/" + table.getTableName() + "/insert";
-        return db.mkCall(opUrl, gson.toJson(query), table.getInsResType());
+        return db.mkCall(opUrl, gson.toJson(query), new InsertConverter<>(table.getInsResType()));
     }
 }

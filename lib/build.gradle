@@ -12,6 +12,7 @@ test {
 dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.0.1'
     compile fileTree(dir: 'extra-libs', include: ['*.jar'])
 
     testCompile 'junit:junit:4.12'
