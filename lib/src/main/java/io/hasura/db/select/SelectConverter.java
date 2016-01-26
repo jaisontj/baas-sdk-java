@@ -21,17 +21,35 @@ public class SelectConverter<T> implements Converter<T, SelectException> {
             }
             else {
                 DBErrorResponse err = Util.parseJson(response, DBErrorResponse.class);
-                throw new SelectException(1, err.getError());
+                SelectError errCode;
+                switch (code) {
+                case 400:
+                    errCode = SelectError.BAD_REQUEST;
+                    break;
+                case 401:
+                    errCode = SelectError.UNAUTHORIZED;
+                    break;
+                case 403:
+                    errCode = SelectError.INVALID_SESSION;
+                    break;
+                case 500:
+                    errCode = SelectError.INTERNAL_ERROR;
+                    break;
+                default:
+                    errCode = SelectError.UNEXPECTED_CODE;
+                    break;
+                }
+                throw new SelectException(errCode, err.getError());
             }
         }
         catch (HasuraJsonException e) {
-            throw new SelectException(e);
+            throw new SelectException(SelectError.INTERNAL_ERROR, e);
         }
     }
 
     @Override
     public SelectException fromIOException(IOException e) {
-        return new SelectException(e);
+        return new SelectException(SelectError.CONNECTION_ERROR, e);
     }
 
     @Override
