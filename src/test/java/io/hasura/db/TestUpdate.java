@@ -15,7 +15,7 @@ public class TestUpdate {
     public void run() throws IOException, DBException {
 
         AuthService authService = new AuthService("http://104.155.219.208");
-        DBService db = new DBService(authService.getUrl(), authService.getClient());
+        DBService db = new DBService(authService.getUrl(), "/api/db", authService.getClient());
         UpdateResult<FileRecord> res =
             db
             .update(FILE)

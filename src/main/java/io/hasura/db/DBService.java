@@ -18,16 +18,18 @@ public class DBService {
     private OkHttpClient client;
 
     private String dbUrl;
+    private String dbPrefix;
 
-    public DBService(String dbUrl, OkHttpClient client) {
+    public DBService(String dbUrl, String dbPrefix, OkHttpClient client) {
         this.dbUrl  = dbUrl;
+        this.dbPrefix = dbPrefix;
         this.client = client;
     }
 
     public <T, E extends Exception> Call<T, E> mkCall(String url, String jsonBody, Converter<T, E> converter) {
         RequestBody reqBody = RequestBody.create(JSON, jsonBody);
         Request request = new Request.Builder()
-            .url(this.dbUrl + "/api/db" + url)
+            .url(this.dbUrl + this.dbPrefix + url)
             .post(reqBody)
             .build();
         return new Call<>(client.newCall(request), converter);
