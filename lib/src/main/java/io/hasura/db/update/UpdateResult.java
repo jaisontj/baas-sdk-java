@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gson.annotations.SerializedName;
 
-class UpdateResult<R> {
+public class UpdateResult<R> {
     private int affectedRows;
 
     @SerializedName("returning")

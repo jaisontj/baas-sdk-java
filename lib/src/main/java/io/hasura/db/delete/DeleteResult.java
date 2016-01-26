@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gson.annotations.SerializedName;
 
-class DeleteResult<R> {
+public class DeleteResult<R> {
     private int affectedRows;
 
     @SerializedName("returning")

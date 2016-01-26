@@ -2,7 +2,7 @@ package io.hasura.db;
 
 import com.google.gson.annotations.SerializedName;
 
-class InsertResult<R> {
+public class InsertResult<R> {
     private int affectedRows;
 
     @SerializedName("returning")
