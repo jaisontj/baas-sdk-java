@@ -21,10 +21,11 @@ public class TestInsert {
             db
             .insert(FILE)
             .set(FILE.FILENAME, "ahoy_ulman")
-            .setAndReturn(FILE.SERVER_PATH, "home/root/")
+            .set(FILE.SERVER_PATH, "home/root/")
+            .returning(FILE.ID, FILE.SERVER_PATH)
             .build()
             .execute();
         System.out.println(res.getCount());
-        System.out.println(res.getRecord());
+        System.out.println(res.getRecords());
     }
 }

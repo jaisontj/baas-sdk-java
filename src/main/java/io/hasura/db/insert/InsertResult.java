@@ -1,18 +1,19 @@
 package io.hasura.db;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
 
 public class InsertResult<R> {
     private int affectedRows;
 
     @SerializedName("returning")
-    private R record;
+    private ArrayList<R> record;
 
     public int getCount() {
         return affectedRows;
     }
 
-    public R getRecord() {
+    public ArrayList<R> getRecords() {
         return record;
     }
 }
