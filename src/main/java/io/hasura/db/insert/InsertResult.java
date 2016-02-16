@@ -1,6 +1,7 @@
-package io.hasura.db;
+package io.hasura.db.insert;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class InsertResult<R> {

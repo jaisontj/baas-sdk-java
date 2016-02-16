@@ -5,6 +5,10 @@ import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 
+import io.hasura.db.delete.DeleteResult;
+import io.hasura.db.insert.InsertResult;
+import io.hasura.db.update.UpdateResult;
+
 class Review extends Table<ReviewRecord> {
 
     public static final Review REVIEW = new Review();

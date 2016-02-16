@@ -1,11 +1,12 @@
 package io.hasura.db;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-class Condition<R> {
+public class Condition<R> {
     private JsonObject boolExp;
 
-    JsonObject getBoolExp() {
+    public JsonObject getBoolExp() {
         return this.boolExp;
     }
 

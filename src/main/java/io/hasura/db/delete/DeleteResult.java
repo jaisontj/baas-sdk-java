@@ -1,8 +1,8 @@
-package io.hasura.db;
-
-import java.util.ArrayList;
+package io.hasura.db.delete;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class DeleteResult<R> {
     private int affectedRows;

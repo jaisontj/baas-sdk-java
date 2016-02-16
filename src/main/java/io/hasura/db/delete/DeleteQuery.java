@@ -1,18 +1,24 @@
-package io.hasura.db;
+package io.hasura.db.delete;
 
-import io.hasura.core.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import java.lang.reflect.Type;
-
-import java.util.List;
-import java.util.ArrayList;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import java.util.HashSet;
 
-import java.io.IOException;
+import io.hasura.core.Call;
+import io.hasura.db.Condition;
+import io.hasura.db.DBException;
+import io.hasura.db.DBResponseConverter;
+import io.hasura.db.DBService;
+import io.hasura.db.QueryWithReturning;
+import io.hasura.db.Table;
+import okhttp3.MediaType;
 
-public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
+public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
     private static Gson gson =
         new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -52,6 +58,6 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R>{
         }
 
         String opUrl = "/table/" + table.getTableName() + "/delete";
-        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<>(table.getDelResType()));
+        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<DeleteResult<R>>(table.getDelResType()));
     }
 }

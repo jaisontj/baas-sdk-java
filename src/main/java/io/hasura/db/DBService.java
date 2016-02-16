@@ -1,15 +1,15 @@
 package io.hasura.db;
 
+import io.hasura.core.Call;
+import io.hasura.core.Converter;
+import io.hasura.db.delete.DeleteQuery;
+import io.hasura.db.insert.InsertQuery;
+import io.hasura.db.select.SelectQuery;
+import io.hasura.db.update.UpdateQuery;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
-
-import io.hasura.core.*;
-
-import java.lang.reflect.Type;
-import java.io.IOException;
 
 public class DBService {
     public static final MediaType JSON

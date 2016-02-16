@@ -1,7 +1,11 @@
 package io.hasura.db;
 
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 
 public class PGField<R, T> implements SelectField <R> {

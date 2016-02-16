@@ -1,16 +1,23 @@
-package io.hasura.db;
+package io.hasura.db.insert;
 
-import io.hasura.core.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
-
-import java.util.List;
-import java.util.ArrayList;
-
 import java.util.HashSet;
 
-import java.io.IOException;
+import io.hasura.core.Call;
+import io.hasura.db.DBException;
+import io.hasura.db.DBResponseConverter;
+import io.hasura.db.DBService;
+import io.hasura.db.PGField;
+import io.hasura.db.QueryWithReturning;
+import io.hasura.db.Table;
 
 public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
     private static Gson gson =
@@ -59,6 +66,6 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         query.add("returning", retArr);
 
         String opUrl = "/table/" + table.getTableName() + "/insert";
-        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<>(table.getInsResType()));
+        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<InsertResult<R>>(table.getInsResType()));
     }
 }

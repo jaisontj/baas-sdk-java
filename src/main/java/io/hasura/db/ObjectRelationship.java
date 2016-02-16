@@ -1,6 +1,9 @@
 package io.hasura.db;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class ObjectRelationship<R1, R2> extends QueryWithProjection<ObjectRelationship<R1, R2>, R2> implements SelectField<R1> {
     private String columnName;
