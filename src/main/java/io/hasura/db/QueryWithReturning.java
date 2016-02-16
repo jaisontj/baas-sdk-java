@@ -1,6 +1,5 @@
 package io.hasura.db;
 
-import java.util.Set;
 import java.util.HashSet;
 
 public abstract class QueryWithReturning<Q, R> {

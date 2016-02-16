@@ -1,9 +1,13 @@
 package io.hasura.db;
 
-import com.google.gson.reflect.*;
-import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import io.hasura.db.delete.DeleteResult;
+import io.hasura.db.insert.InsertResult;
+import io.hasura.db.update.UpdateResult;
 
 class File extends Table<FileRecord> {
 

@@ -1,13 +1,13 @@
 package io.hasura.db;
 
-import static io.hasura.db.File.FILE;
-
-import io.hasura.db.DBService;
-import io.hasura.auth.*;
-
 import org.junit.Test;
-import java.util.List;
+
 import java.io.IOException;
+
+import io.hasura.auth.AuthService;
+import io.hasura.db.update.UpdateResult;
+
+import static io.hasura.db.File.FILE;
 
 public class TestUpdate {
 

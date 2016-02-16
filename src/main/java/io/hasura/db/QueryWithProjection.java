@@ -1,6 +1,6 @@
 package io.hasura.db;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
 
 public abstract class QueryWithProjection<Q, R> {
     protected JsonArray columns;

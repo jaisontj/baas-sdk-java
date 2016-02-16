@@ -1,16 +1,24 @@
-package io.hasura.db;
+package io.hasura.db.update;
 
-import io.hasura.core.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
-
-import java.util.List;
-import java.util.ArrayList;
-
 import java.util.HashSet;
 
-import java.io.IOException;
+import io.hasura.core.Call;
+import io.hasura.db.Condition;
+import io.hasura.db.DBException;
+import io.hasura.db.DBResponseConverter;
+import io.hasura.db.DBService;
+import io.hasura.db.PGField;
+import io.hasura.db.QueryWithReturning;
+import io.hasura.db.Table;
 
 public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
     private static Gson gson =
@@ -67,6 +75,6 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         }
 
         String opUrl = "/table/" + table.getTableName() + "/update";
-        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<>(table.getUpdResType()));
+        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<UpdateResult<R>>(table.getUpdResType()));
     }
 }

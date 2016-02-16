@@ -1,8 +1,8 @@
-package io.hasura.db;
-
-import java.util.ArrayList;
+package io.hasura.db.update;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class UpdateResult<R> {
     private int affectedRows;

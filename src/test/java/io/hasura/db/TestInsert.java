@@ -4,6 +4,7 @@ import static io.hasura.db.File.FILE;
 import io.hasura.auth.*;
 
 import io.hasura.db.DBService;
+import io.hasura.db.insert.InsertResult;
 
 import org.junit.Test;
 import java.util.List;
@@ -17,7 +18,7 @@ public class TestInsert {
         // DBService db = new DBService("http://localhost:8080");
         AuthService authService = new AuthService("http://104.155.219.208");
         DBService db = new DBService(authService.getUrl(), "/api/db", authService.getClient());
-        InsertResult <FileRecord> res =
+        InsertResult<FileRecord> res =
             db
             .insert(FILE)
             .set(FILE.FILENAME, "ahoy_ulman")
