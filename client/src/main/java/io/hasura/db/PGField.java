@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-public class PGField<R, T> implements SelectField <R> {
+public class PGField<R, T> implements SelectField<R> {
     private static Gson gson = new Gson();
 
     private String columnName;
@@ -26,7 +26,7 @@ public class PGField<R, T> implements SelectField <R> {
     }
 
     private Condition<R> op(String opRepr, T val) {
-        Type valType = new TypeToken<T>() {}.getType();
+        Type valType = new TypeToken<T>(){}.getType();
         JsonObject opExp = new JsonObject();
         opExp.add(opRepr, gson.toJsonTree(val, valType));
         JsonObject colExp = new JsonObject();

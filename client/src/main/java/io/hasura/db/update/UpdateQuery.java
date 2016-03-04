@@ -45,7 +45,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
     }
 
     public <T> UpdateQuery<R> set(PGField<R, T> fld, T val) {
-        Type valType = new TypeToken<T>() {}.getType();
+        Type valType = new TypeToken<T>(){}.getType();
         this.updObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
         return this;
     }
@@ -77,7 +77,8 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
 
         String opUrl = "/table/" + table.getTableName() + "/update";
 
-        Converter<UpdateResult<R>, DBException> converter = new DBResponseConverter<>(table.getUpdResType());
+        Converter<UpdateResult<R>, DBException> converter
+            = new DBResponseConverter<>(table.getUpdResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

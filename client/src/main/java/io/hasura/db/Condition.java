@@ -15,8 +15,8 @@ public class Condition<R> {
     }
 
     public Condition<R> and(Condition<R> c2) {
-        JsonObject newBoolExp = new JsonObject ();
-        JsonArray andExpArr = new JsonArray ();
+        JsonObject newBoolExp = new JsonObject();
+        JsonArray andExpArr = new JsonArray();
         andExpArr.add(this.boolExp);
         andExpArr.add(c2.getBoolExp());
         newBoolExp.add("$and", andExpArr);
@@ -24,8 +24,8 @@ public class Condition<R> {
     }
 
     public Condition<R> or(Condition<R> c2) {
-        JsonObject newBoolExp = new JsonObject ();
-        JsonArray orExpArr = new JsonArray ();
+        JsonObject newBoolExp = new JsonObject();
+        JsonArray orExpArr = new JsonArray();
         orExpArr.add(this.boolExp);
         orExpArr.add(c2.getBoolExp());
         newBoolExp.add("$or", orExpArr);

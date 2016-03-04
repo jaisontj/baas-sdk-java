@@ -4,6 +4,6 @@ import com.google.gson.JsonElement;
 
 public interface SelectField<R> {
 
-    public JsonElement toQCol();
+    JsonElement toQCol();
 
 }

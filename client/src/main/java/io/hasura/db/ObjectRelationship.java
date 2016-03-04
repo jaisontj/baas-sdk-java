@@ -5,7 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-public class ObjectRelationship<R1, R2> extends QueryWithProjection<ObjectRelationship<R1, R2>, R2> implements SelectField<R1> {
+public class ObjectRelationship<R1, R2>
+    extends QueryWithProjection<ObjectRelationship<R1, R2>, R2>
+    implements SelectField<R1> {
+
     private String columnName;
 
     public ObjectRelationship<R1, R2> fromColumns(JsonArray columns) {
@@ -26,7 +29,7 @@ public class ObjectRelationship<R1, R2> extends QueryWithProjection<ObjectRelati
     }
 
     public Condition<R1> has(Condition<R2> c) {
-        JsonObject boolExp = new JsonObject ();
+        JsonObject boolExp = new JsonObject();
         boolExp.add(this.columnName, c.getBoolExp());
         return new Condition<R1>(boolExp);
     }

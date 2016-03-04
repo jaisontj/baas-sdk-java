@@ -1,27 +1,23 @@
 package io.hasura.db.util;
 
-import java.util.Map.Entry;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import java.lang.reflect.Type;
-
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import java.lang.reflect.Type;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.HashMap;
 
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 
@@ -108,12 +104,10 @@ public class GenerationUtil {
 
             if (!Character.isJavaIdentifierPart(c)) {
                 sb.append(escape(c));
-            }
-            else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0))) {
+            } else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0))) {
                 sb.append("_");
                 sb.append(c);
-            }
-            else {
+            } else {
                 sb.append(c);
             }
         }
@@ -151,11 +145,9 @@ public class GenerationUtil {
 
                 result.append(word.substring(0, 1).toUpperCase());
                 result.append(word.substring(1).toLowerCase());
-            }
-
-            // If no letter exists, prevail the underscore (e.g. leading
-            // underscores)
-            else {
+            } else {
+                // If no letter exists, prevail the underscore (e.g. leading
+                // underscores)
                 result.append("_");
             }
         }
@@ -170,7 +162,8 @@ public class GenerationUtil {
         return pkgName + ".records";
     }
 
-    public static void generateRecord(File recordsDir, String pkgName, TableInfo tableInfo) throws IOException {
+    public static void generateRecord(
+         File recordsDir, String pkgName, TableInfo tableInfo) throws IOException {
 
         String clsName = toClassName(tableInfo.getTableName());
         String recordFileName = clsName + "Record.java";
@@ -218,7 +211,8 @@ public class GenerationUtil {
         writer.close();
     }
 
-    public static void generateTable(File tablesDir, String pkgName, TableInfo tableInfo) throws IOException {
+    public static void generateTable(
+         File tablesDir, String pkgName, TableInfo tableInfo) throws IOException {
         String tableName = tableInfo.getTableName();
         String clsName = toClassName(tableName);
 
@@ -300,7 +294,8 @@ public class GenerationUtil {
         writer.close();
     }
 
-    public static DBInfo fetchDBInfo(String url, String dbPrefix, String adminAPIKey) throws IOException {
+    public static DBInfo fetchDBInfo(
+         String url, String dbPrefix, String adminAPIKey) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
             .url(url + dbPrefix + "/table")
@@ -314,7 +309,8 @@ public class GenerationUtil {
         return new DBInfo(tables);
     }
 
-    public static void generateTablesJava(String dir, String pkgName, List<String> tableNames) throws IOException {
+    public static void generateTablesJava(
+         String dir, String pkgName, List<String> tableNames) throws IOException {
 
         String fileName = "Tables.java";
 

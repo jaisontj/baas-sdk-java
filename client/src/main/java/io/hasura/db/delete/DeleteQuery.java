@@ -17,7 +17,6 @@ import io.hasura.db.DBResponseConverter;
 import io.hasura.db.DBService;
 import io.hasura.db.QueryWithReturning;
 import io.hasura.db.Table;
-import okhttp3.MediaType;
 
 public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
     private static Gson gson =
@@ -59,7 +58,8 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
         }
 
         String opUrl = "/table/" + table.getTableName() + "/delete";
-        Converter<DeleteResult<R>, DBException> converter = new DBResponseConverter<>(table.getDelResType());
+        Converter<DeleteResult<R>, DBException> converter
+            = new DBResponseConverter<>(table.getDelResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

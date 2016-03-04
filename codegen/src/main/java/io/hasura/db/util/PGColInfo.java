@@ -1,6 +1,5 @@
 package io.hasura.db.util;
 
-import java.util.HashMap;
 import com.google.gson.annotations.SerializedName;
 
 public class PGColInfo {

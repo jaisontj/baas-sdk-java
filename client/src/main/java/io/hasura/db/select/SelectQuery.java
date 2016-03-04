@@ -73,7 +73,8 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
             query.add("offset", new JsonPrimitive(this.offset));
 
         String opUrl = "/table/" + table.getTableName() + "/select";
-        Converter<List<R>, DBException> converter = new DBResponseConverter<>(table.getSelResType());
+        Converter<List<R>, DBException> converter
+            = new DBResponseConverter<>(table.getSelResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

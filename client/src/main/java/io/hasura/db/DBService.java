@@ -26,7 +26,9 @@ public class DBService {
         this.client = client;
     }
 
-    public <T, E extends Exception> Call<T, E> mkCall(String url, String jsonBody, Converter<T, E> converter) {
+    public <T, E extends Exception> Call<T, E> mkCall(String url,
+                                                      String jsonBody,
+                                                      Converter<T, E> converter) {
         RequestBody reqBody = RequestBody.create(JSON, jsonBody);
         Request request = new Request.Builder()
             .url(this.dbUrl + this.dbPrefix + url)

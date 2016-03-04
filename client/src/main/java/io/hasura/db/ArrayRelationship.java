@@ -5,7 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-public class ArrayRelationship<R1, R2> extends QueryWithProjection<ArrayRelationship<R1, R2>, R2> implements SelectField<R1> {
+public class ArrayRelationship<R1, R2>
+    extends QueryWithProjection<ArrayRelationship<R1, R2>, R2>
+    implements SelectField<R1> {
+
     private String columnName;
     private JsonObject whereExp;
     private int limit;
@@ -43,7 +46,7 @@ public class ArrayRelationship<R1, R2> extends QueryWithProjection<ArrayRelation
     }
 
     public Condition<R1> hasAnyWith(Condition<R2> c) {
-        JsonObject boolExp = new JsonObject ();
+        JsonObject boolExp = new JsonObject();
         boolExp.add(this.columnName, c.getBoolExp());
         return new Condition<R1>(boolExp);
     }

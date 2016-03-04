@@ -21,8 +21,7 @@ public class DBResponseConverter<T> implements Converter<T, DBException> {
         try {
             if (code == 200) {
                 return Util.parseJson(response, resType);
-            }
-            else {
+            } else {
                 DBErrorResponse err = Util.parseJson(response, DBErrorResponse.class);
                 DBError errCode;
                 switch (code) {
@@ -47,8 +46,7 @@ public class DBResponseConverter<T> implements Converter<T, DBException> {
                 }
                 throw new DBException(errCode, err.getError());
             }
-        }
-        catch (HasuraJsonException e) {
+        } catch (HasuraJsonException e) {
             throw new DBException(DBError.INTERNAL_ERROR, e);
         }
     }

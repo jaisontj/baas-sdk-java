@@ -45,7 +45,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
     }
 
     public <T> InsertQuery<R> set(PGField<R, T> fld, T val) {
-        Type valType = new TypeToken<T>() {}.getType();
+        Type valType = new TypeToken<T>(){}.getType();
         this.currentObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
         return this;
     }
@@ -68,7 +68,8 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
 
         String opUrl = "/table/" + table.getTableName() + "/insert";
 
-        Converter<InsertResult<R>, DBException> converter = new DBResponseConverter<>(table.getInsResType());
+        Converter<InsertResult<R>, DBException> converter
+            = new DBResponseConverter<>(table.getInsResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

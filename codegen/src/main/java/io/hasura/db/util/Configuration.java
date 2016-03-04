@@ -1,7 +1,5 @@
 package io.hasura.db.util;
 
-import java.util.HashMap;
-
 public class Configuration {
     private String hasuraDBUrl;
     private String dbPrefix;
