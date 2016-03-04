@@ -104,7 +104,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.0</version>
+          <version>3.5</version>
           <configuration>
             <source>${java.version}</source>
             <target>${java.version}</target>
@@ -134,6 +134,12 @@
 
     <plugins>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.3</version>
+      </plugin>
+
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.3</version>
@@ -157,7 +163,6 @@
           <failsOnError>true</failsOnError>
           <configLocation>checkstyle.xml</configLocation>
           <consoleOutput>true</consoleOutput>
-          <excludes>**/CipherSuite.java</excludes>
         </configuration>
         <executions>
           <execution>
@@ -191,5 +196,39 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>ecj</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5</version>
+            <configuration>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
+              <compilerId>eclipse</compilerId>
+              <optimize>true</optimize>
+              <showWarnings>true</showWarnings>
+              <showDeprecation>true</showDeprecation>
+              <compilerArguments>
+                <org.eclipse.jdt.core.compiler.problem.fatalOptionalError>disabled</org.eclipse.jdt.core.compiler.problem.fatalOptionalError>
+                <org.eclipse.jdt.core.compiler.problem.forbiddenReference>ignore</org.eclipse.jdt.core.compiler.problem.forbiddenReference>
+              </compilerArguments>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-compiler-eclipse</artifactId>
+                <version>2.7</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

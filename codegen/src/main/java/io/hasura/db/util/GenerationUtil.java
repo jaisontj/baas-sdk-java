@@ -170,7 +170,7 @@ public class GenerationUtil {
 
         PrintWriter writer = new PrintWriter(new File(recordsDir, recordFileName), "UTF-8");
         String recPkgName = pkgName + ".tables.records";
-        writer.printf("package %s;\n", recPkgName);
+        writer.printf("package %s;%n", recPkgName);
 
         writer.println();
         writer.println("import com.google.gson.annotations.SerializedName;");
@@ -179,29 +179,29 @@ public class GenerationUtil {
         writer.println("import java.sql.Timestamp;");
         writer.println();
 
-        writer.printf("public class %sRecord {\n", clsName);
+        writer.printf("public class %sRecord {%n", clsName);
         for (PGColInfo column : tableInfo.getColumns()) {
             String rawFldName = column.getColName();
             String fldName = toMemberName(rawFldName);
             String fldType = column.getColType().getJavaType();
-            writer.printf("    @SerializedName(\"%s\")\n", rawFldName);
-            writer.printf("    public %s %s;\n", fldType, fldName);
+            writer.printf("    @SerializedName(\"%s\")%n", rawFldName);
+            writer.printf("    public %s %s;%n", fldType, fldName);
             writer.println();
         }
 
         for (RelInfo relInfo : tableInfo.getRelationships()) {
             String rawFldName = relInfo.getRelName();
             String fldName = toMemberName(rawFldName);
-            writer.printf("    @SerializedName(\"%s\")\n", rawFldName);
+            writer.printf("    @SerializedName(\"%s\")%n", rawFldName);
 
             String remoteTableName = toClassName(relInfo.getRemoteTable());
 
             switch (relInfo.getRelType()) {
             case ARR_REL:
-                writer.printf("    public ArrayList<%sRecord> %s;\n", remoteTableName, fldName);
+                writer.printf("    public ArrayList<%sRecord> %s;%n", remoteTableName, fldName);
                 break;
             case OBJ_REL:
-                writer.printf("    public %sRecord %s;\n", remoteTableName, fldName);
+                writer.printf("    public %sRecord %s;%n", remoteTableName, fldName);
                 break;
             }
             writer.println();
@@ -220,7 +220,7 @@ public class GenerationUtil {
 
         PrintWriter writer = new PrintWriter(new File(tablesDir, tableFileName), "UTF-8");
         String tablePkgName = pkgName + ".tables";
-        writer.printf("package %s;\n", tablePkgName);
+        writer.printf("package %s;%n", tablePkgName);
 
         writer.println();
         writer.println("import com.google.gson.reflect.*;");
@@ -233,46 +233,46 @@ public class GenerationUtil {
         writer.printf("import %s.records.*;", tablePkgName);
         writer.println();
 
-        writer.printf("public class %s extends Table<%sRecord> {\n", clsName, clsName);
+        writer.printf("public class %s extends Table<%sRecord> {%n", clsName, clsName);
 
         // Static variable
-        writer.printf("    public static final %s %s = new %s();\n", clsName, toStaticVarName(tableName), clsName);
+        writer.printf("    public static final %s %s = new %s();%n", clsName, toStaticVarName(tableName), clsName);
         writer.println();
 
         // Constructor
-        writer.printf("    public %s() {\n", clsName);
-        writer.printf("        super(\"%s\");\n", tableName);
-        writer.printf("    }\n");
+        writer.printf("    public %s() {%n", clsName);
+        writer.printf("        super(\"%s\");%n", tableName);
+        writer.printf("    }%n");
         writer.println();
 
         // Insert return type
-        writer.printf("    public Type getInsResType() {\n");
-        writer.printf("        return new TypeToken<InsertResult<%sRecord>>() {}.getType();\n", clsName);
-        writer.printf("    }\n");
+        writer.printf("    public Type getInsResType() {%n");
+        writer.printf("        return new TypeToken<InsertResult<%sRecord>>() {}.getType();%n", clsName);
+        writer.printf("    }%n");
         writer.println();
 
         // Select return type
-        writer.printf("    public Type getSelResType() {\n");
-        writer.printf("        return new TypeToken<ArrayList<%sRecord>>() {}.getType();\n", clsName);
-        writer.printf("    }\n");
+        writer.printf("    public Type getSelResType() {%n");
+        writer.printf("        return new TypeToken<ArrayList<%sRecord>>() {}.getType();%n", clsName);
+        writer.printf("    }%n");
         writer.println();
 
         // Update return type
-        writer.printf("    public Type getUpdResType() {\n");
-        writer.printf("        return new TypeToken<UpdateResult<%sRecord>>() {}.getType();\n", clsName);
-        writer.printf("    }\n");
+        writer.printf("    public Type getUpdResType() {%n");
+        writer.printf("        return new TypeToken<UpdateResult<%sRecord>>() {}.getType();%n", clsName);
+        writer.printf("    }%n");
         writer.println();
 
         // Delete return type
-        writer.printf("    public Type getDelResType() {\n");
-        writer.printf("        return new TypeToken<DeleteResult<%sRecord>>() {}.getType();\n", clsName);
-        writer.printf("    }\n");
+        writer.printf("    public Type getDelResType() {%n");
+        writer.printf("        return new TypeToken<DeleteResult<%sRecord>>() {}.getType();%n", clsName);
+        writer.printf("    }%n");
         writer.println();
 
         for (PGColInfo column : tableInfo.getColumns()) {
             String columnName = column.getColName();
             String fldType = column.getColType().getJavaType();
-            writer.printf("    public final PGField<%sRecord, %s> %s = new PGField<>(\"%s\");\n", clsName, fldType, toStaticVarName(columnName), columnName);
+            writer.printf("    public final PGField<%sRecord, %s> %s = new PGField<>(\"%s\");%n", clsName, fldType, toStaticVarName(columnName), columnName);
         }
 
         writer.println();
@@ -282,10 +282,10 @@ public class GenerationUtil {
 
             switch (relInfo.getRelType()) {
             case ARR_REL:
-                writer.printf("    public final ArrayRelationship<%sRecord, %sRecord> %s = new ArrayRelationship<>(\"%s\");\n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
+                writer.printf("    public final ArrayRelationship<%sRecord, %sRecord> %s = new ArrayRelationship<>(\"%s\");%n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
                 break;
             case OBJ_REL:
-                writer.printf("    public final ObjectRelationship<%sRecord, %sRecord> %s = new ObjectRelationship<>(\"%s\");\n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
+                writer.printf("    public final ObjectRelationship<%sRecord, %sRecord> %s = new ObjectRelationship<>(\"%s\");%n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
                 break;
             }
         }
@@ -315,18 +315,18 @@ public class GenerationUtil {
         String fileName = "Tables.java";
 
         PrintWriter writer = new PrintWriter(new File(dir, fileName), "UTF-8");
-        writer.printf("package %s;\n", pkgName);
+        writer.printf("package %s;%n", pkgName);
 
         writer.println();
-        writer.printf("import %s.tables.*;\n", pkgName);
+        writer.printf("import %s.tables.*;%n", pkgName);
         writer.println();
 
-        writer.println("public class Tables {\n");
+        writer.println("public class Tables {%n");
 
         for (String tableName : tableNames) {
             String clsName = toClassName(tableName);
             String staticVarName = toStaticVarName(tableName);
-            writer.printf("    public static final %s %s = %s.tables.%s.%s;\n", clsName, staticVarName, pkgName, clsName, staticVarName);
+            writer.printf("    public static final %s %s = %s.tables.%s.%s;%n", clsName, staticVarName, pkgName, clsName, staticVarName);
             writer.println();
         }
         writer.println("}");
