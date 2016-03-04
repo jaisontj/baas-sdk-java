@@ -10,6 +10,7 @@ import com.google.gson.JsonPrimitive;
 import java.util.List;
 
 import io.hasura.core.Call;
+import io.hasura.core.Converter;
 import io.hasura.db.Condition;
 import io.hasura.db.DBException;
 import io.hasura.db.DBResponseConverter;
@@ -72,6 +73,7 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
             query.add("offset", new JsonPrimitive(this.offset));
 
         String opUrl = "/table/" + table.getTableName() + "/select";
-        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<List<R>>(table.getSelResType()));
+        Converter<List<R>, DBException> converter = new DBResponseConverter<>(table.getSelResType());
+        return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

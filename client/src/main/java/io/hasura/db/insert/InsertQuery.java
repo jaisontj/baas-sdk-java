@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.util.HashSet;
 
 import io.hasura.core.Call;
+import io.hasura.core.Converter;
 import io.hasura.db.DBException;
 import io.hasura.db.DBResponseConverter;
 import io.hasura.db.DBService;
@@ -66,6 +67,8 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         query.add("returning", retArr);
 
         String opUrl = "/table/" + table.getTableName() + "/insert";
-        return db.mkCall(opUrl, gson.toJson(query), new DBResponseConverter<InsertResult<R>>(table.getInsResType()));
+
+        Converter<InsertResult<R>, DBException> converter = new DBResponseConverter<>(table.getInsResType());
+        return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }
