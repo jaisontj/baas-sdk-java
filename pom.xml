@@ -10,18 +10,18 @@
   </parent>
 
   <groupId>io.hasura</groupId>
-  <artifactId>parent</artifactId>
+  <artifactId>baas-sdk</artifactId>
   <version>0.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Hasura (Parent)</name>
-  <description>A HasuraDB client for Android and Java applications</description>
+  <name> Hasura BaaS SDK </name>
+  <description>An all in one SDK for Android and Java applications to communicate with Baas components of Hasura platform</description>
   <url>https://github.com/hasura/hasuradb-java-sdk</url>
 
   <modules>
     <module>auth</module>
-    <module>client</module>
-    <module>codegen</module>
+    <module>db-client</module>
+    <module>db-codegen</module>
   </modules>
 
   <properties>
@@ -97,6 +97,9 @@
           <configuration>
             <source>${java.version}</source>
             <target>${java.version}</target>
+            <compilerArgs>
+              <arg>-Xlint:all</arg>
+            </compilerArgs>
           </configuration>
         </plugin>
 
