@@ -1,17 +1,14 @@
 package io.hasura.core;
 
-import java.io.IOException;
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.ResponseBody;
-import com.google.gson.*;
-import java.lang.reflect.Type;
+
+import java.io.IOException;
 
 public class Call<T, E extends Exception> {
 
     /* Underlying okhttp call */
     private okhttp3.Call rawCall;
-    /* The type of the body */
+
     private final Converter<T, E> converter;
 
     public Call(okhttp3.Call rawCall, Converter<T, E> converter) {
@@ -30,8 +27,7 @@ public class Call<T, E extends Exception> {
                     T response;
                     try {
                         response = converter.fromResponse(rawResponse);
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         callFailure(converter.castException(e));
                         return;
                     }
@@ -71,9 +67,7 @@ public class Call<T, E extends Exception> {
     public T execute() throws E {
         try {
             return converter.fromResponse(rawCall.execute());
-        }
-        catch (IOException e) {
-            // throw new HasuraJsonException(1, "Connection error : ", e);
+        } catch (IOException e) {
             throw converter.fromIOException(e);
         }
     }
