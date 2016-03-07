@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>db-client</artifactId>
-  <name>Databas client</name>
+  <name>Database client</name>
 
   <dependencies>
     <dependency>
@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>auth</artifactId>
+      <artifactId>core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -40,6 +40,12 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>auth</artifactId>
+      <scope>test</scope>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
