@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import io.hasura.auth.AuthService;
-import io.hasura.db.update.UpdateResult;
+import io.hasura.db.UpdateResult;
 
 import static io.hasura.db.File.FILE;
 

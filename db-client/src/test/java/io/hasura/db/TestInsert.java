@@ -4,7 +4,7 @@ import static io.hasura.db.File.FILE;
 import io.hasura.auth.*;
 
 import io.hasura.db.DBService;
-import io.hasura.db.insert.InsertResult;
+import io.hasura.db.InsertResult;
 
 import org.junit.Test;
 import java.util.List;

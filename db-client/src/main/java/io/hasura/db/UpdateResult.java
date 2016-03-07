@@ -1,10 +1,10 @@
-package io.hasura.db.delete;
+package io.hasura.db;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class DeleteResult<R> {
+public class UpdateResult<R> {
     private int affectedRows;
 
     @SerializedName("returning")

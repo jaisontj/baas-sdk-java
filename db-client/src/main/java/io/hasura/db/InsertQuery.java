@@ -1,4 +1,4 @@
-package io.hasura.db.insert;
+package io.hasura.db;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

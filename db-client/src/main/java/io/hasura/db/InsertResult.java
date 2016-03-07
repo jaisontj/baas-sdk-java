@@ -1,4 +1,4 @@
-package io.hasura.db.insert;
+package io.hasura.db;
 
 import com.google.gson.annotations.SerializedName;
 

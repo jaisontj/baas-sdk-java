@@ -2,10 +2,12 @@ package io.hasura.db;
 
 import io.hasura.core.Call;
 import io.hasura.core.Converter;
-import io.hasura.db.delete.DeleteQuery;
-import io.hasura.db.insert.InsertQuery;
-import io.hasura.db.select.SelectQuery;
-import io.hasura.db.update.UpdateQuery;
+
+import io.hasura.db.DeleteQuery;
+import io.hasura.db.InsertQuery;
+import io.hasura.db.SelectQuery;
+import io.hasura.db.UpdateQuery;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,9 +28,8 @@ public class DBService {
         this.client = client;
     }
 
-    public <T, E extends Exception> Call<T, E> mkCall(String url,
-                                                      String jsonBody,
-                                                      Converter<T, E> converter) {
+    public <T, E extends Exception> Call<T, E> mkCall(
+         String url, String jsonBody, Converter<T, E> converter) {
         RequestBody reqBody = RequestBody.create(JSON, jsonBody);
         Request request = new Request.Builder()
             .url(this.dbUrl + this.dbPrefix + url)
