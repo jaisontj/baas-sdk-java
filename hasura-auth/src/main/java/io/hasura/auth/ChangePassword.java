@@ -7,7 +7,7 @@ public class ChangePassword {
     @SerializedName("password")
     String password;
     @SerializedName("new_password")
-    String new_password;
+    String newPassword;
     @SerializedName("info")
     JsonObject info;
 
@@ -19,7 +19,7 @@ public class ChangePassword {
         this.password = password;
     }
 
-    public void setNew_password(String new_password) {
-        this.new_password = new_password;
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

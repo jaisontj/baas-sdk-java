@@ -1,6 +1,5 @@
 package io.hasura.auth;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class RegisterResponse {
@@ -14,7 +13,7 @@ public class RegisterResponse {
         return hasuraId;
     }
 
-    public String getHasura_role() {
+    public String getHasuraRole() {
         return hasuraRole;
     }
 }

@@ -1,17 +1,20 @@
 package io.hasura.auth;
 
-import io.hasura.core.*;
+import io.hasura.core.Call;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import okhttp3.JavaNetCookieJar;
 
+import java.lang.reflect.Type;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 
@@ -34,11 +37,11 @@ public class AuthService {
                             .build();
     }
 
-    public OkHttpClient getClient(){
+    public OkHttpClient getClient() {
         return this.httpClient;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return this.dbUrl;
     }
 
@@ -48,7 +51,10 @@ public class AuthService {
             .url(this.dbUrl + url)
             .post(reqBody)
             .build();
-        return new Call<T, AuthException>(httpClient.newCall(request), new AuthResponseConverter<T>(bodyType));
+        Call<T, AuthException> newCall
+            = new Call<T, AuthException>(
+                    httpClient.newCall(request), new AuthResponseConverter<T>(bodyType));
+        return newCall;
     }
 
     public Call<RegisterResponse, AuthException> register(RegisterRequest r) {
@@ -63,7 +69,8 @@ public class AuthService {
         return mkCall("/auth/login", jsonBody, respType);
     }
 
-    public Call<LoginResponse, AuthException> login(String userName, String password, JsonObject info) {
+    public Call<LoginResponse, AuthException> login(
+         String userName, String password, JsonObject info) {
         return this.login(new LoginRequest(userName, password, info));
     }
 }

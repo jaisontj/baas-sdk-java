@@ -10,6 +10,9 @@ public class LoginResponse {
     @SerializedName("hasura_role")
     String hasuraRole;
 
+    @SerializedName("info")
+    JsonObject info;
+
     public int getHasuraId() {
         return hasuraId;
     }
@@ -17,4 +20,9 @@ public class LoginResponse {
     public String getHasuraRole() {
         return hasuraRole;
     }
+
+    public JsonObject getInfo() {
+        return info;
+    }
+
 }

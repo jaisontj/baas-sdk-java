@@ -1,6 +1,9 @@
 package io.hasura.auth;
 
-import io.hasura.core.*;
+import io.hasura.core.Converter;
+import io.hasura.core.HasuraJsonException;
+import io.hasura.core.Util;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 
@@ -31,8 +34,7 @@ public class AuthResponseConverter<T> implements Converter<T, AuthException> {
         try {
             if (code == 200) {
                 return Util.parseJson(response, resType);
-            }
-            else {
+            } else {
                 AuthErrorResponse err = Util.parseJson(response, AuthErrorResponse.class);
                 AuthError errCode;
                 switch (code) {
@@ -57,8 +59,7 @@ public class AuthResponseConverter<T> implements Converter<T, AuthException> {
                 }
                 throw new AuthException(errCode, err.getMessage());
             }
-        }
-        catch (HasuraJsonException e) {
+        } catch (HasuraJsonException e) {
             throw new AuthException(AuthError.INTERNAL_ERROR, e);
         }
     }
