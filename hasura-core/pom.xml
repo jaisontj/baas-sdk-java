@@ -9,8 +9,8 @@
     <version>0.3.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>core</artifactId>
-  <name>core</name>
+  <artifactId>hasura-core</artifactId>
+  <name>Hasura core</name>
 
   <dependencies>
     <dependency>
