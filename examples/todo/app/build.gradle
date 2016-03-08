@@ -24,4 +24,36 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.parse:parse-android:1.13.0'
+    compile 'com.google.code.gson:gson:2.6'
+    compile 'com.github.hasura:baas-sdk-java:f878bea22d'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath 'com.github.hasura.baas-sdk-java:hasura-db-codegen:f878bea22d'
+    }
+}
+
+task generate << {
+
+    // Read admin credentials
+    Properties props = new Properties()
+    props.load(new FileInputStream("hasura.properties"))
+
+    // Build Generation Configuration
+    // ------------------------------
+    def cfg = new io.hasura.db.util.Configuration();
+    cfg.setDir(props.getProperty("dir"))
+    cfg.setPackageName(props.getProperty("package"))
+    cfg.setDBUrl(props.getProperty("url"))
+    cfg.setDBPrefix(props.getProperty("dbprefix"))
+    cfg.setAdminAPIKey(props.getProperty("adminAPIKey"))
+
+    // Run the code generator
+    // ----------------------
+    io.hasura.db.util.GenerationUtil.generate(cfg)
 }

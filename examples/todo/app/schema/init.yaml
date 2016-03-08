@@ -1,0 +1,54 @@
+permission: []
+schema:
+- __type: create_table
+  name: user
+  columns:
+  - name: hasura_user_id
+    type: integer
+
+  - name: name
+    type: varchar
+
+  - name: email
+    type: varchar
+
+  primary_key:
+  - hasura_user_id
+
+- __type: create_table
+  name: task
+
+  columns:
+  - name: id
+    type: serial
+
+  - name: title
+    type: text
+
+  - name: description
+    type: text
+
+  - name: is_completed
+    type: boolean
+    default: false
+
+  - name: user_id
+    type: integer
+    references:
+      column: hasura_user_id
+      table: user
+
+  primary_key: [id]
+
+relationship:
+- __type: create_object_relationship
+  table: task
+  name: user
+  using: user_id
+
+- __type: create_array_relationship
+  name: tasks
+  table: user
+  using:
+    column: user_id
+    table: task
