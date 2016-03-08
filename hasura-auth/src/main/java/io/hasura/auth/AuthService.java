@@ -27,14 +27,19 @@ public class AuthService {
     private OkHttpClient httpClient;
     private String dbUrl;
 
+    public AuthService(String dbUrl, OkHttpClient httpClient) {
+        this.dbUrl = dbUrl;
+        this.httpClient = httpClient;
+    }
+
     public AuthService(String dbUrl) {
         this.dbUrl = dbUrl;
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        this.httpClient =
-            new OkHttpClient.Builder()
-                            .cookieJar(new JavaNetCookieJar(cookieManager))
-                            .build();
+        this.httpClient
+            = new OkHttpClient.Builder()
+                              .cookieJar(new JavaNetCookieJar(cookieManager))
+                              .build();
     }
 
     public OkHttpClient getClient() {
