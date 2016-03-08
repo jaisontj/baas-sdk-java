@@ -321,7 +321,7 @@ public class GenerationUtil {
         writer.printf("import %s.tables.*;%n", pkgName);
         writer.println();
 
-        writer.println("public class Tables {%n");
+        writer.printf("public class Tables {%n");
 
         for (String tableName : tableNames) {
             String clsName = toClassName(tableName);
