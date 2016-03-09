@@ -1,9 +1,7 @@
 package io.hasura.auth;
 
-import io.hasura.auth.*;
-
 import org.junit.Test;
-import java.util.List;
+
 import java.io.IOException;
 
 public class TestRegister {
