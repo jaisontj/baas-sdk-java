@@ -30,9 +30,8 @@ public class User extends Table<UserRecord> {
         return new TypeToken<DeleteResult<UserRecord>>() {}.getType();
     }
 
-    public final PGField<UserRecord, Integer> HASURA_USER_ID = new PGField<>("hasura_user_id");
-    public final PGField<UserRecord, String> NAME = new PGField<>("name");
-    public final PGField<UserRecord, String> EMAIL = new PGField<>("email");
+    public final PGField<UserRecord, Integer> ID = new PGField<>("id");
+    public final PGField<UserRecord, String> USERNAME = new PGField<>("username");
 
     public final ArrayRelationship<UserRecord, TaskRecord> TASKS = new ArrayRelationship<>("tasks");
 }

@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class TaskAdapter extends ArrayAdapter<Task> {
+import io.hasura.sample.todo.db.tables.records.TaskRecord;
+
+public class TaskAdapter extends ArrayAdapter<TaskRecord> {
 	private Context mContext;
-	private List<Task> mTasks;
+	private List<TaskRecord> mTasks;
 	
-	public TaskAdapter(Context context, List<Task> objects) {
+	public TaskAdapter(Context context, List<TaskRecord> objects) {
 		super(context, R.layout.task_row_item, objects);
 		this.mContext = context;
 		this.mTasks = objects;
@@ -26,13 +28,13 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 			convertView = mLayoutInflater.inflate(R.layout.task_row_item, null);
 		}
 		
-		Task task = mTasks.get(position);
+		TaskRecord task = mTasks.get(position);
 		
 		TextView descriptionView = (TextView) convertView.findViewById(R.id.task_description);
 		
-		descriptionView.setText(task.getDescription());
+		descriptionView.setText(task.title);
 		
-		if(task.isCompleted()){
+		if(task.isCompleted){
 			descriptionView.setPaintFlags(descriptionView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 		}else{
 			descriptionView.setPaintFlags(descriptionView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));

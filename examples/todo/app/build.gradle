@@ -23,9 +23,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.parse:parse-android:1.13.0'
     compile 'com.google.code.gson:gson:2.6'
-    compile 'com.github.hasura:baas-sdk-java:f878bea22d'
+    compile 'com.github.hasura:baas-sdk-java:617ac3b58c'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 }
 
 buildscript {
@@ -34,7 +34,7 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.github.hasura.baas-sdk-java:hasura-db-codegen:f878bea22d'
+        classpath 'com.github.hasura.baas-sdk-java:hasura-db-codegen:617ac3b58c'
     }
 }
 

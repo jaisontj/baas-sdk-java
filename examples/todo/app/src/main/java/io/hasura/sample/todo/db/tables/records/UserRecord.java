@@ -6,14 +6,11 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class UserRecord {
-    @SerializedName("hasura_user_id")
-    public Integer hasuraUserId;
+    @SerializedName("id")
+    public Integer id;
 
-    @SerializedName("name")
-    public String name;
-
-    @SerializedName("email")
-    public String email;
+    @SerializedName("username")
+    public String username;
 
     @SerializedName("tasks")
     public ArrayList<TaskRecord> tasks;
