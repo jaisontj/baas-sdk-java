@@ -1,15 +1,16 @@
 package io.hasura.db;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-
 import io.hasura.core.Converter;
 import io.hasura.core.HasuraJsonException;
 import io.hasura.core.Util;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+
 public class DBResponseConverter<T> implements Converter<T, DBException> {
 
     private final Type resType;
+
     public DBResponseConverter(Type resType) {
         this.resType = resType;
     }
@@ -25,24 +26,24 @@ public class DBResponseConverter<T> implements Converter<T, DBException> {
                 DBErrorResponse err = Util.parseJson(response, DBErrorResponse.class);
                 DBError errCode;
                 switch (code) {
-                case 400:
-                    errCode = DBError.BAD_REQUEST;
-                    break;
-                case 401:
-                    errCode = DBError.UNAUTHORIZED;
-                    break;
-                case 402:
-                    errCode = DBError.REQUEST_FAILED;
-                    break;
-                case 403:
-                    errCode = DBError.INVALID_SESSION;
-                    break;
-                case 500:
-                    errCode = DBError.INTERNAL_ERROR;
-                    break;
-                default:
-                    errCode = DBError.UNEXPECTED_CODE;
-                    break;
+                    case 400:
+                        errCode = DBError.BAD_REQUEST;
+                        break;
+                    case 401:
+                        errCode = DBError.UNAUTHORIZED;
+                        break;
+                    case 402:
+                        errCode = DBError.REQUEST_FAILED;
+                        break;
+                    case 403:
+                        errCode = DBError.INVALID_SESSION;
+                        break;
+                    case 500:
+                        errCode = DBError.INTERNAL_ERROR;
+                        break;
+                    default:
+                        errCode = DBError.UNEXPECTED_CODE;
+                        break;
                 }
                 throw new DBException(errCode, err.getError());
             }

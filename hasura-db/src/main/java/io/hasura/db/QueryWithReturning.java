@@ -5,11 +5,11 @@ import java.util.HashSet;
 public abstract class QueryWithReturning<Q, R> {
     protected HashSet<String> retSet;
 
-    public abstract Q fromRetSet(HashSet<String> retSet);
-
     public QueryWithReturning() {
         this.retSet = new HashSet<>();
     }
+
+    public abstract Q fromRetSet(HashSet<String> retSet);
 
     public <T1> Q returning(PGField<R, T1> f1) {
         this.retSet.add(f1.getColumnName());

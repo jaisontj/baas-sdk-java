@@ -6,10 +6,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 public class ObjectRelationship<R1, R2>
-    extends QueryWithProjection<ObjectRelationship<R1, R2>, R2>
-    implements SelectField<R1> {
+        extends QueryWithProjection<ObjectRelationship<R1, R2>, R2>
+        implements SelectField<R1> {
 
     private String columnName;
+
+    public ObjectRelationship(String columnName) {
+        super();
+        this.columnName = columnName;
+    }
 
     public ObjectRelationship<R1, R2> fromColumns(JsonArray columns) {
         this.columns = columns;
@@ -21,11 +26,6 @@ public class ObjectRelationship<R1, R2>
         col.add("name", new JsonPrimitive(this.columnName));
         col.add("columns", this.columns);
         return col;
-    }
-
-    public ObjectRelationship(String columnName) {
-        super();
-        this.columnName = columnName;
     }
 
     public Condition<R1> has(Condition<R2> c) {

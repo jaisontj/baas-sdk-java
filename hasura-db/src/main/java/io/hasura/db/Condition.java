@@ -6,12 +6,12 @@ import com.google.gson.JsonObject;
 public class Condition<R> {
     private JsonObject boolExp;
 
-    public JsonObject getBoolExp() {
-        return this.boolExp;
-    }
-
     Condition(JsonObject boolExp) {
         this.boolExp = boolExp;
+    }
+
+    public JsonObject getBoolExp() {
+        return this.boolExp;
     }
 
     public Condition<R> and(Condition<R> c2) {

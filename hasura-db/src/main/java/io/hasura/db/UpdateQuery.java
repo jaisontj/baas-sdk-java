@@ -7,25 +7,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
+import io.hasura.core.Call;
+import io.hasura.core.Converter;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
 
-import io.hasura.core.Call;
-import io.hasura.core.Converter;
-import io.hasura.db.Condition;
-import io.hasura.db.DBException;
-import io.hasura.db.DBResponseConverter;
-import io.hasura.db.DBService;
-import io.hasura.db.PGField;
-import io.hasura.db.QueryWithReturning;
-import io.hasura.db.Table;
-
 public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
     private static Gson gson =
-        new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
+            new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .create();
     private JsonObject setObj;
     private JsonObject whereExp;
     private DBService db;
@@ -45,7 +37,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
     }
 
     public <T> UpdateQuery<R> set(PGField<R, T> fld, T val) {
-        Type valType = new TypeToken<T>(){}.getType();
+        Type valType = new TypeToken<T>() {}.getType();
         this.setObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
         return this;
     }
@@ -78,7 +70,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
         String opUrl = "/table/" + table.getTableName() + "/update";
 
         Converter<UpdateResult<R>, DBException> converter
-            = new DBResponseConverter<>(table.getUpdResType());
+                = new DBResponseConverter<>(table.getUpdResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

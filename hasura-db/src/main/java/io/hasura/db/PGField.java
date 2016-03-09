@@ -13,12 +13,12 @@ public class PGField<R, T> implements SelectField<R> {
 
     private String columnName;
 
-    public String getColumnName() {
-        return columnName;
-    }
-
     public PGField(String columnName) {
         this.columnName = columnName;
+    }
+
+    public String getColumnName() {
+        return columnName;
     }
 
     public JsonElement toQCol() {
@@ -26,7 +26,8 @@ public class PGField<R, T> implements SelectField<R> {
     }
 
     private Condition<R> op(String opRepr, T val) {
-        Type valType = new TypeToken<T>(){}.getType();
+        Type valType = new TypeToken<T>() {
+        }.getType();
         JsonObject opExp = new JsonObject();
         opExp.add(opRepr, gson.toJsonTree(val, valType));
         JsonObject colExp = new JsonObject();

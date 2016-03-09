@@ -7,10 +7,8 @@ public class DBException extends Exception {
     /**
      * Construct a new DBException with a particular error code.
      *
-     * @param theCode
-     *          The error code to identify the type of exception.
-     * @param theMessage
-     *          A message describing the error in more detail.
+     * @param theCode    The error code to identify the type of exception.
+     * @param theMessage A message describing the error in more detail.
      */
     public DBException(DBError theCode, String theMessage) {
         super(theMessage);
@@ -20,10 +18,8 @@ public class DBException extends Exception {
     /**
      * Construct a new DBException with a particular error code.
      *
-     * @param theCode
-     *          The error code to identify the type of exception.
-     * @param cause
-     *          The cause of the error.
+     * @param theCode The error code to identify the type of exception.
+     * @param cause   The cause of the error.
      */
     public DBException(DBError theCode, Throwable cause) {
         super(cause);
@@ -42,8 +38,8 @@ public class DBException extends Exception {
     @Override
     public String toString() {
         String message =
-            DBException.class.getName() + " "
-            + code.toString() + " : " + super.getLocalizedMessage();
+                DBException.class.getName() + " "
+                        + code.toString() + " : " + super.getLocalizedMessage();
         return message;
     }
 }

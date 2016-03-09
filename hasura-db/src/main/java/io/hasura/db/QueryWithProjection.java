@@ -5,11 +5,11 @@ import com.google.gson.JsonArray;
 public abstract class QueryWithProjection<Q, R> {
     protected JsonArray columns;
 
-    public abstract Q fromColumns(JsonArray columns);
-
     public QueryWithProjection() {
         this.columns = new JsonArray();
     }
+
+    public abstract Q fromColumns(JsonArray columns);
 
     public Q columns(SelectField<R> f1) {
         this.columns.add(f1.toQCol());

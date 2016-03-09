@@ -6,13 +6,21 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 public class ArrayRelationship<R1, R2>
-    extends QueryWithProjection<ArrayRelationship<R1, R2>, R2>
-    implements SelectField<R1> {
+        extends QueryWithProjection<ArrayRelationship<R1, R2>, R2>
+        implements SelectField<R1> {
 
     private String columnName;
     private JsonObject whereExp;
     private int limit;
     private int offset;
+
+    public ArrayRelationship(String columnName) {
+        super();
+        this.columnName = columnName;
+        this.whereExp = null;
+        this.limit = -1;
+        this.offset = -1;
+    }
 
     public ArrayRelationship<R1, R2> fromColumns(JsonArray columns) {
         this.columns = columns;
@@ -30,14 +38,6 @@ public class ArrayRelationship<R1, R2>
         if (this.offset != -1)
             col.add("offset", new JsonPrimitive(this.offset));
         return col;
-    }
-
-    public ArrayRelationship(String columnName) {
-        super();
-        this.columnName = columnName;
-        this.whereExp = null;
-        this.limit = -1;
-        this.offset = -1;
     }
 
     public ArrayRelationship<R1, R2> where(Condition<R2> c) {

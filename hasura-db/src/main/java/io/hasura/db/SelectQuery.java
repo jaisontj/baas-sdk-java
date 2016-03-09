@@ -6,24 +6,17 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import java.util.List;
-
 import io.hasura.core.Call;
 import io.hasura.core.Converter;
-import io.hasura.db.Condition;
-import io.hasura.db.DBException;
-import io.hasura.db.DBResponseConverter;
-import io.hasura.db.DBService;
-import io.hasura.db.QueryWithProjection;
-import io.hasura.db.Table;
+
+import java.util.List;
 
 public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
     private static Gson gson =
-        new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
+            new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .create();
 
     private JsonObject whereExp;
     private int limit;
@@ -32,11 +25,6 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
     private Table<R> table;
 
-    public SelectQuery<R> fromColumns(JsonArray columns) {
-        this.columns = columns;
-        return this;
-    }
-
     public SelectQuery(DBService db, Table<R> table) {
         super();
         this.whereExp = null;
@@ -44,6 +32,11 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
         this.offset = -1;
         this.table = table;
         this.db = db;
+    }
+
+    public SelectQuery<R> fromColumns(JsonArray columns) {
+        this.columns = columns;
+        return this;
     }
 
     public SelectQuery<R> where(Condition<R> c) {
@@ -74,7 +67,7 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
         String opUrl = "/table/" + table.getTableName() + "/select";
         Converter<List<R>, DBException> converter
-            = new DBResponseConverter<>(table.getSelResType());
+                = new DBResponseConverter<>(table.getSelResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

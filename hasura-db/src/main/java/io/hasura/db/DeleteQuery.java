@@ -6,37 +6,30 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import io.hasura.core.Call;
+import io.hasura.core.Converter;
 
 import java.util.HashSet;
 
-import io.hasura.core.Call;
-import io.hasura.core.Converter;
-import io.hasura.db.Condition;
-import io.hasura.db.DBException;
-import io.hasura.db.DBResponseConverter;
-import io.hasura.db.DBService;
-import io.hasura.db.QueryWithReturning;
-import io.hasura.db.Table;
-
 public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
     private static Gson gson =
-        new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
+            new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .create();
     private JsonObject whereExp;
     private DBService db;
     private Table<R> table;
-
-    public DeleteQuery<R> fromRetSet(HashSet<String> retSet) {
-        this.retSet = retSet;
-        return this;
-    }
 
     public DeleteQuery(DBService db, Table<R> table) {
         super();
         this.whereExp = null;
         this.table = table;
         this.db = db;
+    }
+
+    public DeleteQuery<R> fromRetSet(HashSet<String> retSet) {
+        this.retSet = retSet;
+        return this;
     }
 
     public DeleteQuery<R> where(Condition<R> c) {
@@ -59,7 +52,7 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
 
         String opUrl = "/table/" + table.getTableName() + "/delete";
         Converter<DeleteResult<R>, DBException> converter
-            = new DBResponseConverter<>(table.getDelResType());
+                = new DBResponseConverter<>(table.getDelResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }

@@ -7,34 +7,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
+import io.hasura.core.Call;
+import io.hasura.core.Converter;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
 
-import io.hasura.core.Call;
-import io.hasura.core.Converter;
-import io.hasura.db.DBException;
-import io.hasura.db.DBResponseConverter;
-import io.hasura.db.DBService;
-import io.hasura.db.PGField;
-import io.hasura.db.QueryWithReturning;
-import io.hasura.db.Table;
-
 public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
     private static Gson gson =
-        new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
+            new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .create();
 
     private JsonObject currentObj;
     private JsonArray insObjs;
     private DBService db;
     private Table<R> table;
-
-    public InsertQuery<R> fromRetSet(HashSet<String> retSet) {
-        this.retSet = retSet;
-        return this;
-    }
 
     public InsertQuery(DBService db, Table<R> table) {
         super();
@@ -44,8 +32,13 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         this.db = db;
     }
 
+    public InsertQuery<R> fromRetSet(HashSet<String> retSet) {
+        this.retSet = retSet;
+        return this;
+    }
+
     public <T> InsertQuery<R> set(PGField<R, T> fld, T val) {
-        Type valType = new TypeToken<T>(){}.getType();
+        Type valType = new TypeToken<T>() {}.getType();
         this.currentObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
         return this;
     }
@@ -69,7 +62,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
         String opUrl = "/table/" + table.getTableName() + "/insert";
 
         Converter<InsertResult<R>, DBException> converter
-            = new DBResponseConverter<>(table.getInsResType());
+                = new DBResponseConverter<>(table.getInsResType());
         return db.mkCall(opUrl, gson.toJson(query), converter);
     }
 }
