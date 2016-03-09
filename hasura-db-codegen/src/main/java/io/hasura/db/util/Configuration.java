@@ -11,36 +11,36 @@ public class Configuration {
         return this.packageName;
     }
 
-    public String getAdminAPIKey() {
-        return this.adminAPIKey;
-    }
-
-    public String getDir() {
-        return this.dir;
-    }
-
-    public String getDBUrl() {
-        return this.hasuraDBUrl;
-    }
-
-    public String getDBPrefix() {
-        return this.dbPrefix;
-    }
-
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    public String getAdminAPIKey() {
+        return this.adminAPIKey;
     }
 
     public void setAdminAPIKey(String adminAPIKey) {
         this.adminAPIKey = adminAPIKey;
     }
 
+    public String getDir() {
+        return this.dir;
+    }
+
     public void setDir(String dir) {
         this.dir = dir;
     }
 
+    public String getDBUrl() {
+        return this.hasuraDBUrl;
+    }
+
     public void setDBUrl(String dbUrl) {
         this.hasuraDBUrl = dbUrl;
+    }
+
+    public String getDBPrefix() {
+        return this.dbPrefix;
     }
 
     public void setDBPrefix(String dbPrefix) {

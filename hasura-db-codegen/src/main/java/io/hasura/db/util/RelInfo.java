@@ -1,4 +1,5 @@
 package io.hasura.db.util;
+
 import com.google.gson.annotations.SerializedName;
 
 public class RelInfo {
@@ -7,6 +8,8 @@ public class RelInfo {
 
     @SerializedName("rtable")
     private String remoteTable;
+    @SerializedName("name")
+    private String relName;
 
     public RelType getRelType() {
         return this.relType;
@@ -15,9 +18,6 @@ public class RelInfo {
     public String getRemoteTable() {
         return this.remoteTable;
     }
-
-    @SerializedName("name")
-    private String relName;
 
     public String getRelName() {
         return this.relName;

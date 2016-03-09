@@ -4,28 +4,27 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.lang.reflect.Type;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashSet;
-
-import java.io.PrintWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 
 public class GenerationUtil {
     private static Gson gson =
-        new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
+            new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .create();
 
     private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<String>(asList(
             "abstract",
@@ -163,7 +162,7 @@ public class GenerationUtil {
     }
 
     public static void generateRecord(
-         File recordsDir, String pkgName, TableInfo tableInfo) throws IOException {
+            File recordsDir, String pkgName, TableInfo tableInfo) throws IOException {
 
         String clsName = toClassName(tableInfo.getTableName());
         String recordFileName = clsName + "Record.java";
@@ -197,12 +196,12 @@ public class GenerationUtil {
             String remoteTableName = toClassName(relInfo.getRemoteTable());
 
             switch (relInfo.getRelType()) {
-            case ARR_REL:
-                writer.printf("    public ArrayList<%sRecord> %s;%n", remoteTableName, fldName);
-                break;
-            case OBJ_REL:
-                writer.printf("    public %sRecord %s;%n", remoteTableName, fldName);
-                break;
+                case ARR_REL:
+                    writer.printf("    public ArrayList<%sRecord> %s;%n", remoteTableName, fldName);
+                    break;
+                case OBJ_REL:
+                    writer.printf("    public %sRecord %s;%n", remoteTableName, fldName);
+                    break;
             }
             writer.println();
         }
@@ -212,7 +211,7 @@ public class GenerationUtil {
     }
 
     public static void generateTable(
-         File tablesDir, String pkgName, TableInfo tableInfo) throws IOException {
+            File tablesDir, String pkgName, TableInfo tableInfo) throws IOException {
         String tableName = tableInfo.getTableName();
         String clsName = toClassName(tableName);
 
@@ -281,12 +280,12 @@ public class GenerationUtil {
             String remoteTableClsName = toClassName(relInfo.getRemoteTable());
 
             switch (relInfo.getRelType()) {
-            case ARR_REL:
-                writer.printf("    public final ArrayRelationship<%sRecord, %sRecord> %s = new ArrayRelationship<>(\"%s\");%n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
-                break;
-            case OBJ_REL:
-                writer.printf("    public final ObjectRelationship<%sRecord, %sRecord> %s = new ObjectRelationship<>(\"%s\");%n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
-                break;
+                case ARR_REL:
+                    writer.printf("    public final ArrayRelationship<%sRecord, %sRecord> %s = new ArrayRelationship<>(\"%s\");%n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
+                    break;
+                case OBJ_REL:
+                    writer.printf("    public final ObjectRelationship<%sRecord, %sRecord> %s = new ObjectRelationship<>(\"%s\");%n", clsName, remoteTableClsName, toStaticVarName(relName), relName);
+                    break;
             }
         }
 
@@ -295,13 +294,13 @@ public class GenerationUtil {
     }
 
     public static DBInfo fetchDBInfo(
-         String url, String dbPrefix, String adminAPIKey) throws IOException {
+            String url, String dbPrefix, String adminAPIKey) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-            .url(url + dbPrefix + "/table")
-            .header("X-Hasura-API-Key", adminAPIKey)
-            .get()
-            .build();
+                .url(url + dbPrefix + "/table")
+                .header("X-Hasura-API-Key", adminAPIKey)
+                .get()
+                .build();
         Response response = client.newCall(request).execute();
         String respStr = response.body().string();
         Type tabInfoListType = new TypeToken<ArrayList<TableInfo>>() {}.getType();
@@ -310,7 +309,7 @@ public class GenerationUtil {
     }
 
     public static void generateTablesJava(
-         String dir, String pkgName, List<String> tableNames) throws IOException {
+            String dir, String pkgName, List<String> tableNames) throws IOException {
 
         String fileName = "Tables.java";
 

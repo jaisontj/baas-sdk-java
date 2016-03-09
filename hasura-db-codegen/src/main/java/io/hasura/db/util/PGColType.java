@@ -4,37 +4,37 @@ import com.google.gson.annotations.SerializedName;
 
 public enum PGColType {
     @SerializedName("integer")
-    PG_INT         ("Integer"),
+    PG_INT("Integer"),
 
     @SerializedName("serial")
-    PG_SERIAL      ("Integer"),
+    PG_SERIAL("Integer"),
 
     @SerializedName("real")
-    PG_FLOAT       ("Float"),
+    PG_FLOAT("Float"),
 
     @SerializedName("float8")
-    PG_DOUBLE      ("Double"),
+    PG_DOUBLE("Double"),
 
     @SerializedName("numeric")
-    PG_NUMERIC     ("BigDecimal"),
+    PG_NUMERIC("BigDecimal"),
 
     @SerializedName("boolean")
-    PG_BOOLEAN     ("Boolean"),
+    PG_BOOLEAN("Boolean"),
 
     @SerializedName("varchar")
-    PG_VARCHAR     ("String"),
+    PG_VARCHAR("String"),
 
     @SerializedName("text")
-    PG_TEXT        ("String"),
+    PG_TEXT("String"),
 
     @SerializedName("date")
-    PG_DATE        ("Date"),
+    PG_DATE("Date"),
 
     @SerializedName("timestamptz")
-    PG_TIMESTAMPTZ ("Timestamp"),
+    PG_TIMESTAMPTZ("Timestamp"),
 
     @SerializedName("timetz")
-    PG_TIMETZ      ("Time");
+    PG_TIMETZ("Time");
 
     private final String javaType;
 
