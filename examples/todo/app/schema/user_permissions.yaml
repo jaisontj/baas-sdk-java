@@ -1,0 +1,36 @@
+schema: []
+relationship: []
+permission:
+- __type: create_permissions
+  role: user
+  table: task
+  insert:
+    check:
+      user_id : REQ_USER_ID
+  select:
+    columns: "*"
+    filter:
+      user_id : REQ_USER_ID
+  update:
+    columns:
+      - title
+      - description
+      - is_completed
+    filter:
+      user_id : REQ_USER_ID
+  delete:
+    filter:
+      user_id : REQ_USER_ID
+
+- __type: create_permissions
+  role: user
+  table: user
+  insert:
+    check:
+      id : REQ_USER_ID
+  select:
+    columns: "*"
+    filter:
+      id : REQ_USER_ID
+  update: null
+  delete: null

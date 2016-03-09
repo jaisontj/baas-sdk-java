@@ -3,17 +3,14 @@ schema:
 - __type: create_table
   name: user
   columns:
-  - name: hasura_user_id
+  - name: id
     type: integer
 
-  - name: name
-    type: varchar
-
-  - name: email
+  - name: username
     type: varchar
 
   primary_key:
-  - hasura_user_id
+  - id
 
 - __type: create_table
   name: task
@@ -35,7 +32,7 @@ schema:
   - name: user_id
     type: integer
     references:
-      column: hasura_user_id
+      column: id
       table: user
 
   primary_key: [id]
