@@ -6,10 +6,9 @@ import java.io.IOException;
 
 public class Call<T, E extends Exception> {
 
+    private final Converter<T, E> converter;
     /* Underlying okhttp call */
     private okhttp3.Call rawCall;
-
-    private final Converter<T, E> converter;
 
     public Call(okhttp3.Call rawCall, Converter<T, E> converter) {
         this.converter = converter;
