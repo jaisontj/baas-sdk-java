@@ -3,7 +3,7 @@ package io.hasura.auth;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-public class ChangeEmail {
+public class ChangeEmailRequest {
     @SerializedName("email")
     String email;
 
