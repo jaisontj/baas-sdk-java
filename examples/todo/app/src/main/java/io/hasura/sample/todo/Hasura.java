@@ -39,5 +39,10 @@ public class Hasura {
         Log.d("user_id", userId.toString());
     }
 
+    public static void unsetUserId() {
+        currentCtx.userId = null;
+        Log.d("Hasura Context", "unset current user id");
+    }
+
     private static final Hasura currentCtx = new Hasura();
 }
