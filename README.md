@@ -9,7 +9,10 @@ tables as native Java objects. A gradle task needs to be run to auto-generate th
 
 
 #Usage
-##Step 1: Include dependencies##
+##Step 0: Pre-requisites
+Please make sure that your Gradle is >= 2.12
+
+##Step 1: Include dependencies
 This SDK is available via jitpack.
 Add the following code to your build.gradle (at a module level, not necessarily the build.gradle of the entire project).
 
@@ -50,3 +53,83 @@ task generate << {
    io.hasura.db.util.GenerationUtil.generate(cfg)
 }
 ```
+
+##Step 2: Add Hausra admin credentials
+Next to the ``build.gradle`` file where the configuration mentioned above was added,
+create a new file called ``hasura.properties``.
+The gradle task created above, will use configuration values from this file to
+automatically create classes in your application module. Let's say that our
+app module is ``com.myapp`` then the following values in hasura.properties will
+be appropriate.
+
+``hasura.properties``
+```
+url=http://<YOUR-HASURA-PROJECT-IP>/data
+adminAPIKey=<YOUR-VALID-HASURA-ADMIN-TOKEN>
+package=com.myapp.db
+dbprefix=
+dir=src/main/java/com/myapp/db
+```
+
+##Step 3: Add a Hasura singleton class to intialize the DB and Auth components
+The Hasura singleton class is just a convenient wrapper. You can use it as
+per your own style. Using the file below as a base is recommended.
+
+Let's say our app module is ``com.myapp``, then we can add a Hasura singleton
+class as follows:
+
+``Hasura.java``
+```
+package com.myapp;
+
+import android.util.Log;
+
+import io.hasura.auth.AuthService;
+import io.hasura.db.DBService;
+import okhttp3.OkHttpClient;
+import okhttp3.JavaNetCookieJar;
+import okhttp3.logging.HttpLoggingInterceptor;
+
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+
+
+public class Hasura {
+   public final static OkHttpClient okHttpClient = buildOkHttpClient();
+   public final static AuthService auth = new AuthService("http://<YOUR-HASURA-PROJECT-IP>", okHttpClient);
+   public final static DBService db = new DBService("http://<YOUR-HASURA-PROJECT-IP>/data", "", okHttpClient);
+
+   static OkHttpClient buildOkHttpClient() {
+      CookieManager cookieManager = new CookieManager();
+      cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+      HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+      logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+      return new OkHttpClient.Builder()
+         .addInterceptor(logging)
+         .cookieJar(new JavaNetCookieJar(cookieManager))
+         .build();
+   }
+
+   private Integer userId;
+
+   public static Integer getCurrentUserId() {
+      return currentCtx.userId;
+   }
+
+   public static void setUserId(Integer userId) {
+      currentCtx.userId = userId;
+      Log.d("user_id", userId.toString());
+   }
+
+   public static void unsetUserId() {
+      currentCtx.userId = null;
+      Log.d("Hasura Context", "unset current user id");
+   }
+
+   private static final Hasura currentCtx = new Hasura();
+}
+```
+
+
+
+
