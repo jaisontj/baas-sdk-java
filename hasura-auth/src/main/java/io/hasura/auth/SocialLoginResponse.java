@@ -10,6 +10,9 @@ public class SocialLoginResponse {
     @SerializedName("hasura_role")
     String hasuraRole;
 
+    @SerializedName("new_user")
+    boolean newUser;
+
     @SerializedName("info")
     JsonObject info;
 
@@ -19,6 +22,10 @@ public class SocialLoginResponse {
 
     public String getHasuraRole() {
         return hasuraRole;
+    }
+
+    public boolean isNewUser() {
+      return newUser;
     }
 
     public JsonObject getInfo() {
