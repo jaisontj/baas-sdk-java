@@ -176,6 +176,7 @@ public class GenerationUtil {
         writer.println("import java.util.ArrayList;");
         writer.println("import java.math.BigDecimal;");
         writer.println("import java.sql.Timestamp;");
+        writer.println("import java.util.Date;");
         writer.println();
 
         writer.printf("public class %sRecord {%n", clsName);
@@ -227,6 +228,7 @@ public class GenerationUtil {
         writer.println("import java.util.ArrayList;");
         writer.println("import java.math.BigDecimal;");
         writer.println("import java.sql.Timestamp;");
+        writer.println("import java.util.Date;");
         writer.println("import io.hasura.db.*;");
 
         writer.printf("import %s.records.*;", tablePkgName);
@@ -333,14 +335,38 @@ public class GenerationUtil {
 
     }
 
+    private static void emptyDirectory(File dir) {
+        for (File f : dir.listFiles()) {
+            f.delete();
+        }
+    }
+
     public static void generate(Configuration cfg) throws IOException {
         DBInfo dbInfo = fetchDBInfo(cfg.getDBUrl(), cfg.getDBPrefix(), cfg.getAdminAPIKey());
 
-        /* Create dir/tables, dir/tables/records directories */
-        File tablesDir = new File(cfg.getDir(), "tables");
-        tablesDir.mkdir();
+        File dbDir = new File(cfg.getDir());
+        File tablesDir = new File(dbDir, "tables");
         File recordsDir = new File(tablesDir, "records");
-        recordsDir.mkdir();
+
+        if (dbDir.exists()) {
+            if (tablesDir.exists()) {
+                System.out.printf("Deleting %s/tables/*.java%n", cfg.getDir());
+                emptyDirectory(tablesDir);
+            } else {
+                tablesDir.mkdir();
+            }
+            if (recordsDir.exists()) {
+                System.out.printf("Deleting %s/tables/records/*.java%n", cfg.getDir());
+                emptyDirectory(recordsDir);
+            } else {
+                recordsDir.mkdir();
+            }
+        } else {
+            dbDir.mkdir();
+            /* Create dir/tables, dir/tables/records directories */
+            tablesDir.mkdir();
+            recordsDir.mkdir();
+        }
 
         List<String> tableNames = new ArrayList<String>();
         for (TableInfo tableInfo : dbInfo.getTables()) {

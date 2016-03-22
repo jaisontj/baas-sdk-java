@@ -23,6 +23,7 @@
     <module>hasura-core</module>
     <module>hasura-db</module>
     <module>hasura-db-codegen</module>
+    <module>hasura-db-codegen-gradle-plugin</module>
   </modules>
 
   <properties>
