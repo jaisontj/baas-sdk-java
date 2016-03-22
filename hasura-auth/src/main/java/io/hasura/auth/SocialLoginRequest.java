@@ -6,10 +6,16 @@ import com.google.gson.annotations.SerializedName;
 public class SocialLoginRequest {
     String provider;
     String accessToken;
+    String idToken;
 
     public SocialLoginRequest(String provider, String token) {
         this.provider = provider;
-        this.accessToken = token;
+        if(provider == "google") {
+          this.idToken = token;
+        }
+        else {
+          this.accessToken = token;
+        }
     }
 
     public void setProvider(String provider) {
@@ -18,5 +24,14 @@ public class SocialLoginRequest {
 
     public void setAccessToken(String token) {
         this.accessToken = token;
+    }
+
+    public String prepareRequestURL() {
+        if(idToken != null) {
+          return "/auth/social/" + provider + "/authenticate?id_token=" + idToken;
+        }
+        else {
+          return "/auth/social/" + provider + "/authenticate?access_token=" + accessToken;
+        }
     }
 }
