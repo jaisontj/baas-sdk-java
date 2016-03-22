@@ -5,23 +5,25 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-public class TestLogin {
+public class TestGetCredentials {
 
     @Test
     public void run() throws IOException, AuthException {
 
         AuthService authService = new AuthService("http://localhost:2345");
 
-        // before testing login, we have to make sure the user exists..
+        // before testing get_credentials, we have to make sure the user exists..
         RegisterRequest rq = new RegisterRequest();
-        rq.setUsername("aladdin");
+        rq.setUsername("abu");
         rq.setPassword("abracadabra");
-        rq.setEmail("aladdin@genie.io");
-        rq.setMobile("1010011000");
+        rq.setEmail("abu@genie.io");
         RegisterResponse rr = authService.register(rq).execute();
 
-        // user registered, test login now..
-        LoginResponse r = authService.login("aladdin", "abracadabra", null).execute();
+        // user registered, login now..
+        LoginResponse r = authService.login("abu", "abracadabra", null).execute();
+
+        // user logged in, now test get_credentials
+        GetCredentialsResponse gr = authService.getCredentials().execute();
         System.out.println(r.getHasuraId());
         System.out.println(r.getHasuraRole());
         assertEquals(r.getHasuraRole(), "user");

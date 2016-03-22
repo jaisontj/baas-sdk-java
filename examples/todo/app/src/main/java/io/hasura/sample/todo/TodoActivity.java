@@ -17,6 +17,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import io.hasura.auth.AuthException;
+import io.hasura.auth.LogoutResponse;
+import io.hasura.core.Call;
 import io.hasura.core.Callback;
 import io.hasura.db.DBException;
 import io.hasura.db.InsertQuery;
@@ -109,7 +112,7 @@ public class TodoActivity extends Activity implements OnItemClickListener {
                 }
             });
 		}
-	} 
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,14 +122,27 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_logout: 
-			// TODO ParseUser.logOut();
-			Intent intent = new Intent(this, LoginActivity.class);
-			startActivity(intent);
-			finish();
-			return true; 
-		} 
-		return false; 
+		case R.id.action_logout:
+            Hasura.auth.logout().enqueue(new Callback<LogoutResponse, AuthException>() {
+                @Override
+                public void onSuccess(LogoutResponse response) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Hasura.unsetUserId();
+                            Intent intent = new Intent(TodoActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(AuthException e) {
+                    // FIXME: what to do on logout failure?
+                }
+            });
+		}
+		return false;
 	}
 
 	@Override

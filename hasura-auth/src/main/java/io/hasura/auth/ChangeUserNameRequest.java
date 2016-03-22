@@ -3,9 +3,9 @@ package io.hasura.auth;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-public class ConfirmEmail {
-    @SerializedName("token")
-    String token;
+public class ChangeUserNameRequest {
+    @SerializedName("username")
+    String username;
     @SerializedName("info")
     JsonObject info;
 
@@ -13,7 +13,7 @@ public class ConfirmEmail {
         this.info = info;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
