@@ -1,5 +1,7 @@
 # 0.3.1
 
+## hasura-db-codegen
+
 **Improvements**
 
 * Deletes old generated files, create base directory if it doesn't exist.
