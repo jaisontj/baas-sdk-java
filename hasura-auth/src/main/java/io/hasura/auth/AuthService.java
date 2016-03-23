@@ -191,9 +191,7 @@ public class AuthService {
     }
 
     public Call<SocialLoginResponse, AuthException> socialAuth(SocialLoginRequest r) {
-        String provider = r.provider;
-        String accessToken = r.accessToken;
-        String url = "/auth/social/" + provider + "/authenticate?access_token=" + accessToken;
+        String url = r.prepareRequestURL();
         Type respType = new TypeToken<SocialLoginResponse>() {
         }.getType();
         return mkGetCall(url, respType);
