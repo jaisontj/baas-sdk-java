@@ -31,5 +31,4 @@ public class GetCredentialsResponse {
     public String getSessionId() {
         return sessiondId;
     }
-
 }
