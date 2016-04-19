@@ -14,10 +14,6 @@ import java.lang.reflect.Type;
 import java.util.HashSet;
 
 public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
-    private static Gson gson =
-            new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
     private JsonObject setObj;
     private JsonObject whereExp;
     private DBService db;
@@ -38,7 +34,7 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
 
     public <T> UpdateQuery<R> set(PGField<R, T> fld, T val) {
         Type valType = new TypeToken<T>() {}.getType();
-        this.setObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
+        this.setObj.add(fld.getColumnName(), db.gson.toJsonTree(val, valType));
         return this;
     }
 
@@ -71,6 +67,6 @@ public class UpdateQuery<R> extends QueryWithReturning<UpdateQuery<R>, R> {
 
         Converter<UpdateResult<R>, DBException> converter
                 = new DBResponseConverter<>(table.getUpdResType());
-        return db.mkCall(opUrl, gson.toJson(query), converter);
+        return db.mkCall(opUrl, db.gson.toJson(query), converter);
     }
 }

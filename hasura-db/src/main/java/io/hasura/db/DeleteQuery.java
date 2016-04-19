@@ -12,10 +12,6 @@ import io.hasura.core.Converter;
 import java.util.HashSet;
 
 public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
-    private static Gson gson =
-            new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
     private JsonObject whereExp;
     private DBService db;
     private Table<R> table;
@@ -53,6 +49,6 @@ public class DeleteQuery<R> extends QueryWithReturning<DeleteQuery<R>, R> {
         String opUrl = "/table/" + table.getTableName() + "/delete";
         Converter<DeleteResult<R>, DBException> converter
                 = new DBResponseConverter<>(table.getDelResType());
-        return db.mkCall(opUrl, gson.toJson(query), converter);
+        return db.mkCall(opUrl, db.gson.toJson(query), converter);
     }
 }
