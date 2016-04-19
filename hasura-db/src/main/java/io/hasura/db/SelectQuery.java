@@ -13,11 +13,6 @@ import java.util.List;
 
 public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
-    private static Gson gson =
-            new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
-
     private JsonObject whereExp;
     private int limit;
     private int offset;
@@ -68,6 +63,6 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
         String opUrl = "/table/" + table.getTableName() + "/select";
         Converter<List<R>, DBException> converter
                 = new DBResponseConverter<>(table.getSelResType());
-        return db.mkCall(opUrl, gson.toJson(query), converter);
+        return db.mkCall(opUrl, db.gson.toJson(query), converter);
     }
 }

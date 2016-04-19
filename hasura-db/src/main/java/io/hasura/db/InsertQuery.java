@@ -14,11 +14,6 @@ import java.lang.reflect.Type;
 import java.util.HashSet;
 
 public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
-    private static Gson gson =
-            new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
-
     private JsonObject currentObj;
     private JsonArray insObjs;
     private DBService db;
@@ -39,7 +34,7 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
 
     public <T> InsertQuery<R> set(PGField<R, T> fld, T val) {
         Type valType = new TypeToken<T>() {}.getType();
-        this.currentObj.add(fld.getColumnName(), gson.toJsonTree(val, valType));
+        this.currentObj.add(fld.getColumnName(), db.gson.toJsonTree(val, valType));
         return this;
     }
 
@@ -63,6 +58,6 @@ public class InsertQuery<R> extends QueryWithReturning<InsertQuery<R>, R> {
 
         Converter<InsertResult<R>, DBException> converter
                 = new DBResponseConverter<>(table.getInsResType());
-        return db.mkCall(opUrl, gson.toJson(query), converter);
+        return db.mkCall(opUrl, db.gson.toJson(query), converter);
     }
 }
