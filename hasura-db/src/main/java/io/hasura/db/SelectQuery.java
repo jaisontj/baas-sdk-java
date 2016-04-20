@@ -70,7 +70,6 @@ public class SelectQuery<R> extends QueryWithOrder<SelectQuery<R>, R> {
         String opUrl = "/table/" + table.getTableName() + "/select";
         Converter<List<R>, DBException> converter
                 = new DBResponseConverter<>(table.getSelResType());
-        System.out.println(db.gson.toJson(query));
         return db.mkCall(opUrl, db.gson.toJson(query), converter);
     }
 }
