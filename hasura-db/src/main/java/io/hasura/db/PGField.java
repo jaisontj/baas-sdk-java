@@ -58,4 +58,12 @@ public class PGField<R, T> implements SelectField<R> {
     public Condition<R> lte(T val) {
         return this.op("$lte", val);
     }
+
+    public SortField<R> asc() {
+        return new SortFieldImpl<>(this.columnName, SortOrder.ASC, NullsOrder.LAST);
+    }
+
+    public SortField<R> desc() {
+        return new SortFieldImpl<>(this.columnName, SortOrder.DESC, NullsOrder.FIRST);
+    }
 }
