@@ -11,12 +11,16 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.sql.Date;
+
 public class DBService {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
     public static final Gson gson = new GsonBuilder()
                     .serializeNulls()
+                    .registerTypeAdapter(Date.class, GsonTypeConverters.dateJsonSerializer)
+                    .registerTypeAdapter(Date.class, GsonTypeConverters.dateJsonDeserializer)
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .create();
 
