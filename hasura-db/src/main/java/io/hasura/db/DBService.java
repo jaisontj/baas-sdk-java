@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class DBService {
     public static final MediaType JSON
@@ -21,6 +23,10 @@ public class DBService {
                     .serializeNulls()
                     .registerTypeAdapter(Date.class, GsonTypeConverters.dateJsonSerializer)
                     .registerTypeAdapter(Date.class, GsonTypeConverters.dateJsonDeserializer)
+                    .registerTypeAdapter(Time.class, GsonTypeConverters.timeJsonSerializer)
+                    .registerTypeAdapter(Time.class, GsonTypeConverters.timeJsonDeserializer)
+                    .registerTypeAdapter(Timestamp.class, GsonTypeConverters.tsJsonSerializer)
+                    .registerTypeAdapter(Timestamp.class, GsonTypeConverters.tsJsonDeserializer)
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .create();
 
