@@ -22,6 +22,7 @@ public class TestSelect {
             .select(FILE)
             .columns(FILE.ID, FILE.FILENAME, FILE.SERVER_PATH)
             .where(FILE.ID.eq(3))
+            .orderBy(FILE.ID.asc())
             .limit(10)
             .offset(0)
             .build().execute();

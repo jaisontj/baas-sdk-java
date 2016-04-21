@@ -11,7 +11,7 @@ import io.hasura.core.Converter;
 
 import java.util.List;
 
-public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
+public class SelectQuery<R> extends QueryWithOrder<SelectQuery<R>, R> {
 
     private JsonObject whereExp;
     private int limit;
@@ -31,6 +31,11 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
 
     public SelectQuery<R> fromColumns(JsonArray columns) {
         this.columns = columns;
+        return this;
+    }
+
+    public SelectQuery<R> fromOrderByCols(JsonArray orderByCols) {
+        this.orderByCols = orderByCols;
         return this;
     }
 
@@ -59,6 +64,8 @@ public class SelectQuery<R> extends QueryWithProjection<SelectQuery<R>, R> {
             query.add("limit", new JsonPrimitive(this.limit));
         if (this.offset != -1)
             query.add("offset", new JsonPrimitive(this.offset));
+        if (this.orderByCols.size() > 0)
+            query.add("order_by", this.orderByCols);
 
         String opUrl = "/table/" + table.getTableName() + "/select";
         Converter<List<R>, DBException> converter

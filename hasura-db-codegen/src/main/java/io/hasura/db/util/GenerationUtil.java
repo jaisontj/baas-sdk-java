@@ -176,7 +176,8 @@ public class GenerationUtil {
         writer.println("import java.util.ArrayList;");
         writer.println("import java.math.BigDecimal;");
         writer.println("import java.sql.Timestamp;");
-        writer.println("import java.util.Date;");
+        writer.println("import java.sql.Date;");
+        writer.println("import java.sql.Time;");
         writer.println();
 
         writer.printf("public class %sRecord {%n", clsName);
@@ -228,7 +229,8 @@ public class GenerationUtil {
         writer.println("import java.util.ArrayList;");
         writer.println("import java.math.BigDecimal;");
         writer.println("import java.sql.Timestamp;");
-        writer.println("import java.util.Date;");
+        writer.println("import java.sql.Date;");
+        writer.println("import java.sql.Time;");
         writer.println("import io.hasura.db.*;");
 
         writer.printf("import %s.records.*;", tablePkgName);
