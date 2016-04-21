@@ -11,7 +11,7 @@ public class LogoutResponse {
         return message;
     }
 
-    /*public Boolean isSuccess() {
+    public Boolean isSuccess() {
         return message == "Logged out";
-    }*/
+    }
 }
