@@ -32,7 +32,7 @@ public class GsonTypeConverters {
             }
         };
 
-    private final static SimpleDateFormat tsFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    private final static SimpleDateFormat tsFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     public final static JsonSerializer<Timestamp> tsJsonSerializer = new JsonSerializer<Timestamp>() {
         @Override
@@ -53,7 +53,7 @@ public class GsonTypeConverters {
         }
     };
 
-    private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSSXXX");
+    private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSSZ");
 
     public final static JsonSerializer<Time> timeJsonSerializer = new JsonSerializer<Time>() {
         @Override
