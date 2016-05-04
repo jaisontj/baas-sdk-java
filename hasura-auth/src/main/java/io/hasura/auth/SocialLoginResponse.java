@@ -13,8 +13,8 @@ public class SocialLoginResponse {
     @SerializedName("new_user")
     boolean newUser;
 
-    @SerializedName("session_id")
-    String sessionId;
+    @SerializedName("auth_token")
+    String auth_token;
 
     @SerializedName("info")
     JsonObject info;
@@ -28,7 +28,7 @@ public class SocialLoginResponse {
     }
 
     public String getSessionId() {
-        return sessionId;
+        return auth_token;
     }
 
     public boolean isNewUser() {

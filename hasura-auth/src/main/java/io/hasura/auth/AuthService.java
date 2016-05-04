@@ -130,7 +130,7 @@ public class AuthService {
      * Returns credentials of the logged in user
      * <p>
      *     This method can be used to retrieve Hasura credentials for the current logged in user.
-     *     Hasura credentials include "hasura_id", "hasura_role" and "session_id". This method can
+     *     Hasura credentials include "Hasura Id", "Hausura Role" and "Session Id". This method can
      *     also be used to check if the user has an existing session (or logged in basically). If
      *     not logged in, it will throw an {@link AuthException}.
      * </p>

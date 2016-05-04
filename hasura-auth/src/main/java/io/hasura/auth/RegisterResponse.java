@@ -9,8 +9,8 @@ public class RegisterResponse {
     @SerializedName("hasura_role")
     String hasuraRole;
 
-    @SerializedName("session_id")
-    String sessionId;
+    @SerializedName("auth_token")
+    String auth_token;
 
     public int getHasuraId() {
         return hasuraId;
@@ -21,6 +21,6 @@ public class RegisterResponse {
     }
 
     public String getSessionId() {
-        return sessionId;
+        return auth_token;
     }
 }
