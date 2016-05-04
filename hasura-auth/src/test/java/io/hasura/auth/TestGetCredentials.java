@@ -10,7 +10,7 @@ public class TestGetCredentials {
     @Test
     public void run() throws IOException, AuthException {
 
-        AuthService authService = new AuthService("http://localhost:2345");
+        AuthService authService = new AuthService("http://auth.localhost:2345");
 
         // before testing get_credentials, we have to make sure the user exists..
         RegisterRequest rq = new RegisterRequest();
@@ -20,7 +20,7 @@ public class TestGetCredentials {
         RegisterResponse rr = authService.register(rq).execute();
 
         // user registered, login now..
-        LoginResponse r = authService.login("abu", "abracadabra", null).execute();
+        LoginResponse r = authService.login("abu", "abracadabra").execute();
 
         // user logged in, now test get_credentials
         GetCredentialsResponse gr = authService.getCredentials().execute();

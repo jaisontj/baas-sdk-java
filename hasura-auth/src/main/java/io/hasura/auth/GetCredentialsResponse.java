@@ -13,8 +13,8 @@ public class GetCredentialsResponse {
     @SerializedName("info")
     JsonObject info;
 
-    @SerializedName("session_id")
-    String sessiondId;
+    @SerializedName("auth_token")
+    String auth_token;
 
     public int getHasuraId() {
         return hasuraId;
@@ -29,6 +29,6 @@ public class GetCredentialsResponse {
     }
 
     public String getSessionId() {
-        return sessiondId;
+        return auth_token;
     }
 }

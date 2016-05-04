@@ -1,13 +1,26 @@
 package io.hasura.auth;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class ConfirmEmailResponse {
-    @SerializedName("user-id")
-    String user_id;
-    @SerializedName("user-email")
-    String email;
+    @SerializedName("hasura_id")
+    int hasuraId;
+
+    @SerializedName("user_email")
+    String userEmail;
+
     @SerializedName("message")
     String message;
+
+    public int getHasuraId() {
+      return hasuraId;
+    }
+
+    public String getUserEmail() {
+      return userEmail;
+    }
+
+    public String getMessage() {
+      return message;
+    }
 }

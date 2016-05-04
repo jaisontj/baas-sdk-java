@@ -10,7 +10,7 @@ public class TestRegister {
     @Test
     public void run() throws IOException, AuthException {
 
-        AuthService authService = new AuthService("http://localhost:2345");
+        AuthService authService = new AuthService("http://auth.localhost:2345");
 
         RegisterRequest rq = new RegisterRequest();
         rq.setUsername("jasmine");

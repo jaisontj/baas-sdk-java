@@ -10,7 +10,7 @@ public class TestLogout {
     @Test
     public void run() throws IOException, AuthException {
 
-        AuthService authService = new AuthService("http://localhost:2345");
+        AuthService authService = new AuthService("http://auth.localhost:2345");
 
         // before testing logout, we have to make sure the user exists..
         RegisterRequest rq = new RegisterRequest();
@@ -19,7 +19,7 @@ public class TestLogout {
         RegisterResponse rr = authService.register(rq).execute();
 
         // user registered, login now..
-        LoginResponse r = authService.login("jafar", "abracadabra", null).execute();
+        LoginResponse r = authService.login("jafar", "abracadabra").execute();
         System.out.println(r.getHasuraId());
         System.out.println(r.getHasuraRole());
 
