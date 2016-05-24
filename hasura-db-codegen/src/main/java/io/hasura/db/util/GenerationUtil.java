@@ -300,7 +300,7 @@ public class GenerationUtil {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + dbPrefix + "/table")
-                .header("X-Hasura-API-Key", adminAPIKey)
+                .header("Authorization", "Hasura " + adminAPIKey)
                 .get()
                 .build();
         Response response = client.newCall(request).execute();
