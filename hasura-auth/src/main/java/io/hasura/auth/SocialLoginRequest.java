@@ -26,6 +26,10 @@ public class SocialLoginRequest {
         this.accessToken = token;
     }
 
+    public void setIdToken(String token) {
+        this.idToken = token;
+    }
+
     public String prepareRequestURL() {
         if(idToken != null) {
           return "/auth/social/" + provider + "/authenticate?id_token=" + idToken;

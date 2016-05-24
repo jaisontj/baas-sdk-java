@@ -1,6 +1,5 @@
 package io.hasura.auth;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class ForgotPasswordRequest {

@@ -10,8 +10,8 @@ public class LoginResponse {
     @SerializedName("hasura_role")
     String hasuraRole;
 
-    @SerializedName("session_id")
-    String sessionId;
+    @SerializedName("auth_token")
+    String auth_token;
 
      @SerializedName("info")
     JsonObject info;
@@ -25,7 +25,7 @@ public class LoginResponse {
     }
 
     public String getSessionId() {
-        return sessionId;
+        return auth_token;
     }
 
     public JsonObject getInfo() {

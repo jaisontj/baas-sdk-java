@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 public class ArrayRelationship<R1, R2>
-        extends QueryWithProjection<ArrayRelationship<R1, R2>, R2>
+        extends QueryWithOrder<ArrayRelationship<R1, R2>, R2>
         implements SelectField<R1> {
 
     private String columnName;
@@ -27,6 +27,11 @@ public class ArrayRelationship<R1, R2>
         return this;
     }
 
+    public ArrayRelationship<R1, R2> fromOrderByCols(JsonArray orderByCols) {
+        this.orderByCols = orderByCols;
+        return this;
+    }
+
     public JsonElement toQCol() {
         JsonObject col = new JsonObject();
         col.add("name", new JsonPrimitive(this.columnName));
@@ -37,6 +42,8 @@ public class ArrayRelationship<R1, R2>
             col.add("limit", new JsonPrimitive(this.limit));
         if (this.offset != -1)
             col.add("offset", new JsonPrimitive(this.offset));
+        if (this.orderByCols.size() > 0)
+            col.add("order_by", this.orderByCols);
         return col;
     }
 
