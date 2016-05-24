@@ -10,7 +10,7 @@ public class TestLogin {
     @Test
     public void run() throws IOException, AuthException {
 
-        AuthService authService = new AuthService("http://auth.localhost:2345");
+        AuthService authService = new AuthService("http://auth.bompod.hasura-app.io");
 
         // before testing login, we have to make sure the user exists..
         RegisterRequest rq = new RegisterRequest();
@@ -23,7 +23,7 @@ public class TestLogin {
         // user registered, test login now..
         LoginResponse r = authService.login("aladdin", "abracadabra").execute();
         System.out.println(r.getHasuraId());
-        System.out.println(r.getHasuraRole());
-        assertEquals(r.getHasuraRole(), "user");
+        System.out.println(r.getHasuraRoles());
+        assertEquals(r.getHasuraRoles()[0], "user");
     }
 }
