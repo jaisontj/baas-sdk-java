@@ -13,10 +13,10 @@
   <url>https://github.com/hasura/hasuradb-java-sdk</url>
 
   <modules>
+    <module>hasura-db-codegen</module>
     <module>hasura-auth</module>
     <module>hasura-core</module>
     <module>hasura-db</module>
-    <module>hasura-db-codegen</module>
   </modules>
 
   <properties>

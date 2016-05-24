@@ -7,8 +7,8 @@ public class SocialLoginResponse {
     @SerializedName("hasura_id")
     int hasuraId;
 
-    @SerializedName("hasura_role")
-    String hasuraRole;
+    @SerializedName("hasura_roles")
+    String[] hasuraRoles;
 
     @SerializedName("new_user")
     boolean newUser;
@@ -23,8 +23,8 @@ public class SocialLoginResponse {
         return hasuraId;
     }
 
-    public String getHasuraRole() {
-        return hasuraRole;
+    public String[] getHasuraRoles() {
+        return hasuraRoles;
     }
 
     public String getSessionId() {

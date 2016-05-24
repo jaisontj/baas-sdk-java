@@ -21,15 +21,15 @@ public class AuthService {
             = MediaType.parse("application/json; charset=utf-8");
     private static final Gson gson = new GsonBuilder().create();
     private OkHttpClient httpClient;
-    private String dbUrl;
+    private String authUrl;
 
-    public AuthService(String dbUrl, OkHttpClient httpClient) {
-        this.dbUrl = dbUrl;
+    public AuthService(String authUrl, OkHttpClient httpClient) {
+        this.authUrl = authUrl;
         this.httpClient = httpClient;
     }
 
-    public AuthService(String dbUrl) {
-        this.dbUrl = dbUrl;
+    public AuthService(String authUrl) {
+        this.authUrl = authUrl;
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         this.httpClient
@@ -43,13 +43,13 @@ public class AuthService {
     }
 
     public String getUrl() {
-        return this.dbUrl;
+        return this.authUrl;
     }
 
     private <T> Call<T, AuthException> mkPostCall(String url, String jsonBody, Type bodyType) {
         RequestBody reqBody = RequestBody.create(JSON, jsonBody);
         Request request = new Request.Builder()
-                .url(this.dbUrl + url)
+                .url(this.authUrl + url)
                 .post(reqBody)
                 .build();
         Call<T, AuthException> newCall
@@ -60,7 +60,7 @@ public class AuthService {
 
     private <T> Call<T, AuthException> mkGetCall(String url, Type bodyType) {
         Request request = new Request.Builder()
-                .url(this.dbUrl + url)
+                .url(this.authUrl + url)
                 .build();
         Call<T, AuthException> newCall
                 = new Call<T, AuthException>(
