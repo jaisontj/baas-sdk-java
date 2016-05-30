@@ -6,6 +6,9 @@ public enum PGColType {
     @SerializedName("integer")
     PG_INT("Integer"),
 
+    @SerializedName("bigint")
+    PG_BIGINT("Long"),
+
     @SerializedName("serial")
     PG_SERIAL("Integer"),
 
