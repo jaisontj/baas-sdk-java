@@ -10,7 +10,7 @@ public class TestRegister {
     @Test
     public void run() throws IOException, AuthException {
 
-        AuthService authService = new AuthService("http://auth.localhost:2345");
+        AuthService authService = new AuthService("http://auth.bompod.hasura-app.io");
 
         RegisterRequest rq = new RegisterRequest();
         rq.setUsername("jasmine");
@@ -19,6 +19,6 @@ public class TestRegister {
         rq.setMobile("9867152343");
         RegisterResponse rr = authService.register(rq).execute();
         System.out.println(rr.getHasuraId());
-        assertEquals(rr.getHasuraRole(), "user");
+        assertEquals(rr.getHasuraRoles()[0], "user");
     }
 }

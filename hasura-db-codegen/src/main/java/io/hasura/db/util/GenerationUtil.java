@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.Response;
 
 import java.io.File;
@@ -299,10 +300,13 @@ public class GenerationUtil {
 
     public static DBInfo fetchDBInfo(
             String url, String dbPrefix, String adminAPIKey) throws IOException {
-        OkHttpClient client = new OkHttpClient();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build();
         Request request = new Request.Builder()
                 .url(url + dbPrefix + "/table")
-                .header("X-Hasura-API-Key", adminAPIKey)
+                .header("Authorization", "Hasura " + adminAPIKey)
                 .get()
                 .build();
         Response response = client.newCall(request).execute();

@@ -7,8 +7,8 @@ public class GetCredentialsResponse {
     @SerializedName("hasura_id")
     int hasuraId;
 
-    @SerializedName("hasura_role")
-    String hasuraRole;
+    @SerializedName("hasura_roles")
+    String[] hasuraRoles;
 
     @SerializedName("info")
     JsonObject info;
@@ -20,8 +20,8 @@ public class GetCredentialsResponse {
         return hasuraId;
     }
 
-    public String getHasuraRole() {
-        return hasuraRole;
+    public String[] getHasuraRoles() {
+        return hasuraRoles;
     }
 
     public JsonObject getInfo() {

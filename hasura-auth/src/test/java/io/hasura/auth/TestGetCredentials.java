@@ -10,7 +10,7 @@ public class TestGetCredentials {
     @Test
     public void run() throws IOException, AuthException {
 
-        AuthService authService = new AuthService("http://auth.localhost:2345");
+        AuthService authService = new AuthService("http://auth.bompod.hasura-app.io");
 
         // before testing get_credentials, we have to make sure the user exists..
         RegisterRequest rq = new RegisterRequest();
@@ -25,7 +25,7 @@ public class TestGetCredentials {
         // user logged in, now test get_credentials
         GetCredentialsResponse gr = authService.getCredentials().execute();
         System.out.println(r.getHasuraId());
-        System.out.println(r.getHasuraRole());
-        assertEquals(r.getHasuraRole(), "user");
+        System.out.println(r.getHasuraRoles());
+        assertEquals(r.getHasuraRoles()[0], "user");
     }
 }
