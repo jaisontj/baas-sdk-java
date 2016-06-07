@@ -75,7 +75,7 @@ dir=src/main/java/com/myapp/db
 The Hasura singleton class is just a convenient wrapper. You can use it as
 per your own style. Using the file below as a base is recommended.
 
-Let's say our app module is ``com.myapp``, then we can add a Hasura singleton
+Let's say our app module is ``com.myapp``, and our Hasura project name is ``myproject`` then we can add a Hasura singleton
 class as follows:
 
 ``Hasura.java``
@@ -87,47 +87,102 @@ import android.util.Log;
 import io.hasura.auth.AuthService;
 import io.hasura.db.DBService;
 import okhttp3.OkHttpClient;
-import okhttp3.JavaNetCookieJar;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-import java.net.CookieManager;
-import java.net.CookiePolicy;
-
-
 public class Hasura {
-   public final static OkHttpClient okHttpClient = buildOkHttpClient();
-   public final static AuthService auth = new AuthService("http://<YOUR-HASURA-PROJECT-IP>", okHttpClient);
-   public final static DBService db = new DBService("http://<YOUR-HASURA-PROJECT-IP>/data", "", okHttpClient);
 
-   static OkHttpClient buildOkHttpClient() {
-      CookieManager cookieManager = new CookieManager();
-      cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-      HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-      logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-      return new OkHttpClient.Builder()
-         .addInterceptor(logging)
-         .cookieJar(new JavaNetCookieJar(cookieManager))
-         .build();
-   }
+    public static AuthService auth;
+    public static DBService db;
+    private Integer userId;
+    private String sessionId;
+    private String role;
 
-   private Integer userId;
+    public static Hasura getInstance() {
+        return currentCtx;
+    }
 
-   public static Integer getCurrentUserId() {
-      return currentCtx.userId;
-   }
+    public static void setClient() {
 
-   public static void setUserId(Integer userId) {
-      currentCtx.userId = userId;
-      Log.d("user_id", userId.toString());
-   }
+        // Ready
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-   public static void unsetUserId() {
-      currentCtx.userId = null;
-      Log.d("Hasura Context", "unset current user id");
-   }
+        OkHttpClient c = new OkHttpClient.Builder()
+            .addInterceptor(new HasuraTokenInterceptor())
+            .addInterceptor(logging)
+            .build();
 
-   private static final Hasura currentCtx = new Hasura();
+        Hasura.auth = new AuthService("http://auth.myproject.hasura-app.io", c);
+        Hasura.db = new DBService("http://data.myproject.hasura-app.io/api/1", "", c);
+    }
+
+    public static Integer getCurrentUserId() {
+        return currentCtx.userId;
+    }
+
+    public static String getCurrentRole() {
+        return currentCtx.role;
+    }
+
+    public static String getCurrentSessionId () {
+        return currentCtx.sessionId;
+    }
+
+    public static void setCurrentSession(Integer userId, String role, String sessionId) {
+        Log.d("{{HASURA :: AUTH", "Setting current session");
+
+        if (role == null) {
+            role = "anonymous";
+        }
+
+        currentCtx.userId = userId;
+        currentCtx.sessionId = sessionId;
+        currentCtx.role = role;
+
+        // Reset the current client so that we are logged in
+        setClient();
+    }
+
+    private static final Hasura currentCtx = new Hasura();
+
 }
+
 ```
 
+Then add one more file as follows to automate the auth token handling:
+``HasuraTokenInterceptor.java``
+```
+package com.myapp;
 
+import android.util.Log;
+
+import java.io.IOException;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class HasuraTokenInterceptor implements Interceptor {
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        Request request = chain.request();
+        Response response;
+        Log.d("{{HASURA INTERCEPTOR", request.headers().toString());
+        String session = Hasura.getCurrentSessionId();
+        String role = Hasura.getCurrentRole();
+
+        if (session == null)  {
+            response = chain.proceed(request);
+        } else {
+            Request newRequest = request.newBuilder()
+                    .addHeader("Authorization", "Hasura " + session)
+                    .addHeader("X-Hasura-Role", role)
+                    .build();
+            Log.d("{{HASURA INTERCEPTOR", newRequest.headers().toString());
+            response = chain.proceed(newRequest);
+        }
+
+        return response;
+    }
+}
+```
