@@ -1,0 +1,1 @@
+Some of the APIs are heavily influenced by the amazing [jooq](http://www.jooq.org) library.
