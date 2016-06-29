@@ -32,10 +32,10 @@ public class SocialLoginRequest {
 
     public String prepareRequestURL() {
         if(idToken != null) {
-          return "/auth/social/" + provider + "/authenticate?id_token=" + idToken;
+          return "/" + provider + "/authenticate?id_token=" + idToken;
         }
         else {
-          return "/auth/social/" + provider + "/authenticate?access_token=" + accessToken;
+          return "/" + provider + "/authenticate?access_token=" + accessToken;
         }
     }
 }
