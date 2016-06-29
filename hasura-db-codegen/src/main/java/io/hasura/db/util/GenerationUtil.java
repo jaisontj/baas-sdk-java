@@ -1,3 +1,5 @@
+/* Several snippets of code from the jooq-codegen library have been used here */
+
 package io.hasura.db.util;
 
 import com.google.gson.FieldNamingPolicy;
