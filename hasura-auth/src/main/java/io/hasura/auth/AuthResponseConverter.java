@@ -21,9 +21,9 @@ public class AuthResponseConverter<T> implements Converter<T, AuthException> {
 
         try {
             if (code == 200) {
-                return Util.parseJson(response, resType);
+                return Util.parseJson(AuthService.gson, response, resType);
             } else {
-                AuthErrorResponse err = Util.parseJson(response, AuthErrorResponse.class);
+                AuthErrorResponse err = Util.parseJson(AuthService.gson, response, AuthErrorResponse.class);
                 AuthError errCode;
                 switch (code) {
                     case 400:

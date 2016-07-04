@@ -21,9 +21,9 @@ public class DBResponseConverter<T> implements Converter<T, DBException> {
 
         try {
             if (code == 200) {
-                return Util.parseJson(response, resType);
+                return Util.parseJson(DBService.gson, response, resType);
             } else {
-                DBErrorResponse err = Util.parseJson(response, DBErrorResponse.class);
+                DBErrorResponse err = Util.parseJson(DBService.gson, response, DBErrorResponse.class);
                 DBError errCode;
                 switch (code) {
                     case 400:
