@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import io.hasura.db.DeleteResult;
 import io.hasura.db.InsertResult;
@@ -36,5 +37,6 @@ class File extends Table<FileRecord> {
     public final PGField<FileRecord, String> SERVER_PATH = new PGField<>("server_path");
     public final PGField<FileRecord, String> FILENAME = new PGField<>("filename");
     public final PGField<FileRecord, Integer> ID = new PGField<>("id");
+    public final PGField<FileRecord, Date> CREATED = new PGField<>("created");
 
 }
