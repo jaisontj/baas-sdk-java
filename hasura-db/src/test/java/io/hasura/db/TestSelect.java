@@ -19,12 +19,15 @@ public class TestSelect {
         List<FileRecord> fileRecords =
             db
             .select(FILE)
-            .columns(FILE.ID, FILE.FILENAME, FILE.SERVER_PATH, FILE.CREATED)
-            .where(FILE.ID.eq(2))
+            .columns(FILE.ID, FILE.FILENAME,
+                     FILE.SERVER_PATH, FILE.CREATED,
+                     FILE.CREATED_TS, FILE.CREATED_T
+                     )
             .orderBy(FILE.ID.asc())
             .limit(10)
             .offset(0)
-            .build().execute();
+            .build()
+            .execute();
         for (FileRecord fr : fileRecords)
             System.out.println(fr);
     }

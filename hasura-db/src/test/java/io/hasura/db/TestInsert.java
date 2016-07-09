@@ -10,17 +10,25 @@ import org.junit.Test;
 import java.util.List;
 import java.io.IOException;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 public class TestInsert {
 
     @Test
     public void run() throws IOException, DBException {
 
         DBService db = DBTestService.db;
+        long currentTime = System.currentTimeMillis();
         InsertResult<FileRecord> res =
             db
             .insert(FILE)
             .set(FILE.FILENAME, "ahoy_ulman")
             .set(FILE.SERVER_PATH, "home/root/")
+            .set(FILE.CREATED, new Date(currentTime))
+            .set(FILE.CREATED_TS, new Timestamp(currentTime))
+            .set(FILE.CREATED_T, new Time(currentTime))
             .returning(FILE.ID, FILE.SERVER_PATH)
             .build()
             .execute();

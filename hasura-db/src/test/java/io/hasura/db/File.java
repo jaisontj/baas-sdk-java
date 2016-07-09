@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.sql.Time;
 
 import io.hasura.db.DeleteResult;
 import io.hasura.db.InsertResult;
@@ -38,5 +40,7 @@ class File extends Table<FileRecord> {
     public final PGField<FileRecord, String> FILENAME = new PGField<>("filename");
     public final PGField<FileRecord, Integer> ID = new PGField<>("id");
     public final PGField<FileRecord, Date> CREATED = new PGField<>("created");
+    public final PGField<FileRecord, Timestamp> CREATED_TS = new PGField<>("created_ts");
+    public final PGField<FileRecord, Time> CREATED_T = new PGField<>("created_t");
 
 }
