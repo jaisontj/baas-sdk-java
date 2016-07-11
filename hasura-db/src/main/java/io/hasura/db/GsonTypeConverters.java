@@ -32,7 +32,7 @@ public class GsonTypeConverters {
             }
         };
 
-    private final static SimpleDateFormat tsFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX");
+    private final static SimpleDateFormat tsFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ");
 
     public final static JsonSerializer<Timestamp> tsJsonSerializer = new JsonSerializer<Timestamp>() {
         @Override
@@ -57,7 +57,7 @@ public class GsonTypeConverters {
         }
     };
 
-    private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSSSSSXXX");
+    private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSSSSSZ");
 
     public final static JsonSerializer<Time> timeJsonSerializer = new JsonSerializer<Time>() {
         @Override
@@ -80,32 +80,33 @@ public class GsonTypeConverters {
     };
 
     private static String normaliseTime(String s) {
-        int sLen = s.length();
+        StringBuilder norm = new StringBuilder(s);
+        int sLen = norm.length();
         // No padding required
-        if (sLen < 9 || sLen == 23)
+        if (sLen < 9)
             return s;
-        String sTZNorm = s;
+        if (sLen == 21)
+            return norm.deleteCharAt(18).toString();
         // ends with Z
         if (s.charAt(sLen - 1) == 'Z') {
-            sTZNorm = s.replace("Z", "+00:00");
+            norm.replace(sLen - 1, sLen, "+00:00");
         } else {
             // Check the last 3rd char for *+00
             char l3 = s.charAt(sLen - 3);
             if (l3 == '+' || l3 == '-') {
-                sTZNorm = s + ":00";
+                norm.append(":00");
             }
         }
-        String finalNorm = sTZNorm;
-        char msBegin = sTZNorm.charAt(8);
+        char msBegin = norm.charAt(8);
         if (msBegin != '.') {
-            finalNorm = sTZNorm.substring(0, 8) + ".000000" + sTZNorm.substring(8);
+            norm.insert(8, ".000000");
         } else {
-            int colPos = finalNorm.indexOf(':', 9);
+            int colPos = norm.indexOf(":", 9);
             // 18 is the actual pos in normalised string
             String zeroPad = new String(new char[18 - colPos]).replace('\0', '0');
-            finalNorm = sTZNorm.substring(0, colPos - 3) + zeroPad + sTZNorm.substring(colPos - 3);
+            norm.insert(colPos - 3, zeroPad);
         }
-        return finalNorm;
+        return norm.deleteCharAt(18).toString();
     }
 
 }
