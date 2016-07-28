@@ -23,7 +23,7 @@ public class TestSelect {
                      FILE.SERVER_PATH, FILE.CREATED,
                      FILE.CREATED_TS, FILE.CREATED_T
                      )
-            .orderBy(FILE.ID.asc())
+            .orderBy(FILE.CREATED_TS.desc())
             .limit(10)
             .offset(0)
             .build()

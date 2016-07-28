@@ -17,7 +17,7 @@ public abstract class QueryWithOrder<Q, R> extends QueryWithProjection<Q, R> {
     private JsonObject toOrderByElem(SortField<R> f) {
         JsonObject obe = new JsonObject();
         obe.add("column", new JsonPrimitive(f.getColumnName()));
-        obe.add("order",  new JsonPrimitive(f.getOrder().getOrderType()));
+        obe.add("type",  new JsonPrimitive(f.getOrder().getOrderType()));
         obe.add("nulls",  new JsonPrimitive(f.getNullsOrder().getNullsOrderType()));
         return obe;
     }
