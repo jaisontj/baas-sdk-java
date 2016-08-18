@@ -22,6 +22,7 @@ import io.hasura.auth.LogoutResponse;
 import io.hasura.core.Call;
 import io.hasura.core.Callback;
 import io.hasura.core.Hasura;
+import io.hasura.core.PersistentCookieStore;
 import io.hasura.db.DBException;
 import io.hasura.db.InsertQuery;
 import io.hasura.db.InsertResult;
@@ -62,12 +63,14 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 	}
 
 	public void updateData(){
+        Log.i(getClass().getSimpleName(),"Todo before"+String.valueOf(new PersistentCookieStore(TodoActivity.this).getCookies()));
         SelectQuery<TaskRecord> q
                 = Hasura.getDB().select(TASK)
                 .columns(TASK.ID, TASK.DESCRIPTION, TASK.IS_COMPLETED, TASK.TITLE);
         q.build().enqueue(new Callback<List<TaskRecord>, DBException>() {
             @Override
             public void onSuccess(final List<TaskRecord> taskRecords) {
+                Log.i(getClass().getSimpleName(),"Todo after success"+String.valueOf(new PersistentCookieStore(TodoActivity.this).getCookies()));
                 runOnUiThread(new Runnable() {
                     public void run() {
                         mAdapter.clear();
@@ -80,7 +83,7 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 
             @Override
             public void onFailure(DBException e) {
-
+                Log.i(getClass().getSimpleName(),"Todo after failure"+String.valueOf(new PersistentCookieStore(TodoActivity.this).getCookies()));
             }
         });
 	}

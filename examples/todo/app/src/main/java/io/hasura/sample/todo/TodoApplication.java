@@ -1,6 +1,7 @@
 package io.hasura.sample.todo;
 
 import android.app.Application;
+import android.util.Log;
 
 import io.hasura.core.*;
 
@@ -12,6 +13,9 @@ public class TodoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Hasura.init(getApplicationContext(),"https://auth.nonslip53.hasura-app.io","https://data.nonslip53.hasura-app.io");
+        Log.i(getClass().getSimpleName(),"Before clear"+String.valueOf(new PersistentCookieStore(getApplicationContext()).getCookies()));
+        (new PersistentCookieStore(getApplicationContext())).removeAll();
+        Log.i(getClass().getSimpleName(),"After clear"+String.valueOf(new PersistentCookieStore(getApplicationContext()).getCookies()));
+        Hasura.init(getApplicationContext(),"https://auth.nonslip53.hasura-app.io","https://data.nonslip53.hasura-app.io/api/1");
     }
 }
