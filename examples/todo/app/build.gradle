@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "io.hasura.sample.todo"
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -18,13 +18,18 @@ android {
         }
     }
 }
+repositories {
+    maven { url uri("/Users/34crossandriod/Documents/Android Repository/sdk/test-android-sdk/core/repo") }
+
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'io.hasura:core:0.1.0'
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.google.code.gson:gson:2.6'
-    compile 'com.github.hasura:baas-sdk-java:617ac3b58c'
+//    compile 'com.github.hasura:baas-sdk-java:617ac3b58c'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 }
 

@@ -6,7 +6,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="todo"
+        android:name=".TodoApplication"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name="io.hasura.sample.todo.TodoActivity"

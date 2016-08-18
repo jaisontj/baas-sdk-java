@@ -21,6 +21,7 @@ import io.hasura.auth.AuthException;
 import io.hasura.auth.LogoutResponse;
 import io.hasura.core.Call;
 import io.hasura.core.Callback;
+import io.hasura.core.Hasura;
 import io.hasura.db.DBException;
 import io.hasura.db.InsertQuery;
 import io.hasura.db.InsertResult;
@@ -42,7 +43,7 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_todo);
 
-		Integer currentUser = Hasura.getCurrentUserId();
+		Integer currentUser = Hasura.getUserId();
 
 		if (currentUser == null) {
 			Intent intent = new Intent(this, LoginActivity.class);
@@ -62,7 +63,7 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 
 	public void updateData(){
         SelectQuery<TaskRecord> q
-                = Hasura.db.select(TASK)
+                = Hasura.getDB().select(TASK)
                 .columns(TASK.ID, TASK.DESCRIPTION, TASK.IS_COMPLETED, TASK.TITLE);
         q.build().enqueue(new Callback<List<TaskRecord>, DBException>() {
             @Override
@@ -86,13 +87,13 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 
 	public void createTask(View v) {
 		if (mTaskInput.getText().length() > 0){
-            Log.d("user_id_insert", Hasura.getCurrentUserId().toString());
+            Log.d("user_id_insert", Hasura.getUserId().toString());
             InsertQuery<TaskRecord> query
-                    = Hasura.db.insert(TASK)
+                    = Hasura.getDB().insert(TASK)
                     .set(TASK.TITLE, mTaskInput.getText().toString())
                     .set(TASK.DESCRIPTION, "")
                     .set(TASK.IS_COMPLETED, false)
-                    .set(TASK.USER_ID, Hasura.getCurrentUserId())
+                    .set(TASK.USER_ID, Hasura.getUserId())
                     .returning(TASK.ID, TASK.TITLE, TASK.IS_COMPLETED);
 
             query.build().enqueue(new Callback<InsertResult<TaskRecord>, DBException>() {
@@ -123,12 +124,12 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_logout:
-            Hasura.auth.logout().enqueue(new Callback<LogoutResponse, AuthException>() {
+            Hasura.getAuth().logout().enqueue(new Callback<LogoutResponse, AuthException>() {
                 @Override
                 public void onSuccess(LogoutResponse response) {
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            Hasura.unsetUserId();
+//                            Hasura.unsetUserId();
                             Intent intent = new Intent(TodoActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -159,7 +160,7 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 		}
 
         UpdateQuery<TaskRecord> q =
-                Hasura.db.update(TASK)
+                Hasura.getDB().update(TASK)
                 .set(TASK.IS_COMPLETED, task.isCompleted)
                 .where(TASK.ID.eq(task.id));
 

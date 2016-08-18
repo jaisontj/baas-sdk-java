@@ -12,6 +12,7 @@ import io.hasura.auth.AuthException;
 import io.hasura.auth.RegisterRequest;
 import io.hasura.auth.RegisterResponse;
 import io.hasura.core.Callback;
+import io.hasura.core.Hasura;
 import io.hasura.db.DBException;
 import io.hasura.db.InsertQuery;
 import io.hasura.sample.todo.db.tables.records.UserRecord;
@@ -56,11 +57,11 @@ public class RegisterActivity extends Activity {
         rr.setUsername(userName);
         rr.setPassword(password);
 
-        Hasura.auth.register(rr).enqueue(new Callback<RegisterResponse, AuthException>() {
+        Hasura.getAuth().register(rr).enqueue(new Callback<RegisterResponse, AuthException>() {
             @Override
             public void onSuccess(final RegisterResponse registerResponse) {
                 InsertQuery<UserRecord> query
-                        = Hasura.db.insert(USER)
+                        = Hasura.getDB().insert(USER)
                         .set(USER.ID, registerResponse.getHasuraId())
                         .set(USER.USERNAME, userName);
                 try {

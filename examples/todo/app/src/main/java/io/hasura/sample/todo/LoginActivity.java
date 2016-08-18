@@ -12,6 +12,7 @@ import io.hasura.auth.AuthException;
 import io.hasura.auth.LoginResponse;
 import io.hasura.core.Call;
 import io.hasura.core.Callback;
+import io.hasura.core.Hasura;
 
 public class LoginActivity extends Activity {
 
@@ -40,7 +41,7 @@ public class LoginActivity extends Activity {
         v.setEnabled(false);
         String userName = mUsernameField.getText().toString();
         String password = mPasswordField.getText().toString();
-        Call<LoginResponse, AuthException> loginCall = Hasura.auth.login(userName, password, null);
+        Call<LoginResponse, AuthException> loginCall = Hasura.getAuth().login(userName, password);
 
         loginCall.enqueue(new Callback<LoginResponse, AuthException>() {
             @Override

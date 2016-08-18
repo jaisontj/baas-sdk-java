@@ -1,3 +1,4 @@
+/*
 package io.hasura.sample.todo;
 
 import android.util.Log;
@@ -46,3 +47,4 @@ public class Hasura {
 
     private static final Hasura currentCtx = new Hasura();
 }
+*/
