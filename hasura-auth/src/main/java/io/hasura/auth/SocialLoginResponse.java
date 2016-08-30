@@ -16,8 +16,8 @@ public class SocialLoginResponse {
     @SerializedName("auth_token")
     String auth_token;
 
-    @SerializedName("info")
-    JsonObject info;
+    @SerializedName("access_token")
+    String access_token;
 
     public int getHasuraId() {
         return hasuraId;
@@ -35,7 +35,7 @@ public class SocialLoginResponse {
       return newUser;
     }
 
-    public JsonObject getInfo() {
-        return info;
+    public JsonObject getAccessToken() {
+        return access_token;
     }
 }
