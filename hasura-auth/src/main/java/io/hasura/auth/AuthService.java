@@ -19,7 +19,7 @@ public class AuthService {
 
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
-    private static final Gson gson = new GsonBuilder().create();
+    protected static final Gson gson = new GsonBuilder().create();
     private OkHttpClient httpClient;
     private String authUrl;
 

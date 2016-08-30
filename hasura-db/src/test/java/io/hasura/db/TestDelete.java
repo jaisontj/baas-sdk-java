@@ -15,9 +15,7 @@ public class TestDelete {
     @Test
     public void run() throws IOException, DBException {
 
-        // DBService db = new DBService("http://localhost:8080");
-        AuthService authService = new AuthService("http://104.155.219.208");
-        DBService db = new DBService(authService.getUrl(), "/api/db", authService.getClient());
+        DBService db = DBTestService.db;
         DeleteResult<FileRecord> res =
             db
             .delete(FILE)

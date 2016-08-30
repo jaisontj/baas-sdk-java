@@ -1,6 +1,7 @@
 package io.hasura.db.util;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.JsonElement;
 
 public enum PGColType {
     @SerializedName("integer")
@@ -37,7 +38,13 @@ public enum PGColType {
     PG_TIMESTAMPTZ("Timestamp"),
 
     @SerializedName("timetz")
-    PG_TIMETZ("Time");
+    PG_TIMETZ("Time"),
+
+    @SerializedName("jsonb")
+    PG_JSONB("JsonElement"),
+
+    @SerializedName("json")
+    PG_JSON("JsonElement");
 
     private final String javaType;
 

@@ -15,8 +15,7 @@ public class TestSelectArrRel {
     @Test
     public void run() throws IOException, DBException {
 
-        AuthService authService = new AuthService("http://104.155.219.208");
-        DBService db = new DBService(authService.getUrl(), "/api/db", authService.getClient());
+        DBService db = DBTestService.db;
         List<FakUserRecord> userRecords =
             db
             .select(FAK_USER)
