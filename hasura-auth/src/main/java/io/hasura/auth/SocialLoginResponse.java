@@ -35,7 +35,7 @@ public class SocialLoginResponse {
       return newUser;
     }
 
-    public JsonObject getAccessToken() {
+    public String getAccessToken() {
         return access_token;
     }
 }
