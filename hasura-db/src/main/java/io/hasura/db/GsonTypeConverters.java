@@ -17,10 +17,12 @@ import com.google.gson.JsonDeserializationContext;
 
 public class GsonTypeConverters {
 
+    private final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public final static JsonSerializer<Date> dateJsonSerializer = new JsonSerializer<Date>() {
             @Override
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-                return src == null ? null : new JsonPrimitive(src.toString());
+                return src == null ? null : new JsonPrimitive(dateFormat.format(src));
             }
         };
 
