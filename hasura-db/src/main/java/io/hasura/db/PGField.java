@@ -7,9 +7,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import io.hasura.db.DBService;
 
 public class PGField<R, T> implements SelectField<R> {
-    private static Gson gson = new Gson();
 
     private String columnName;
 
@@ -29,7 +29,7 @@ public class PGField<R, T> implements SelectField<R> {
         Type valType = new TypeToken<T>() {
         }.getType();
         JsonObject opExp = new JsonObject();
-        opExp.add(opRepr, gson.toJsonTree(val, valType));
+        opExp.add(opRepr, DBService.gson.toJsonTree(val, valType));
         JsonObject colExp = new JsonObject();
         colExp.add(this.columnName, opExp);
         return new Condition<R>(colExp);
