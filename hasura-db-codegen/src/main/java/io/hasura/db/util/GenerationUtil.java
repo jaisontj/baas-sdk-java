@@ -8,6 +8,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.MediaType;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.Response;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Scanner;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
@@ -28,6 +31,8 @@ public class GenerationUtil {
             new GsonBuilder()
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .create();
+    public static final MediaType JSON
+        = MediaType.parse("application/json; charset=utf-8");
 
     private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<String>(asList(
             "abstract",
@@ -165,7 +170,7 @@ public class GenerationUtil {
     }
 
     public static void generateRecord(
-            File recordsDir, String pkgName, TableInfo tableInfo) throws IOException {
+                                      File recordsDir, String pkgName, TableInfo tableInfo) throws UnexpectedSchema, IOException {
 
         String clsName = toClassName(tableInfo.getTableName());
         String recordFileName = clsName + "Record.java";
@@ -199,7 +204,7 @@ public class GenerationUtil {
             String fldName = toMemberName(rawFldName);
             writer.printf("    @SerializedName(\"%s\")%n", rawFldName);
 
-            String remoteTableName = toClassName(relInfo.getRemoteTable());
+            String remoteTableName = toClassName(tableInfo.getRemoteTable(relInfo));
 
             switch (relInfo.getRelType()) {
                 case ARR_REL:
@@ -217,7 +222,7 @@ public class GenerationUtil {
     }
 
     public static void generateTable(
-            File tablesDir, String pkgName, TableInfo tableInfo) throws IOException {
+                                     File tablesDir, String pkgName, TableInfo tableInfo) throws UnexpectedSchema, IOException {
         String tableName = tableInfo.getTableName();
         String clsName = toClassName(tableName);
 
@@ -286,7 +291,7 @@ public class GenerationUtil {
         writer.println();
         for (RelInfo relInfo : tableInfo.getRelationships()) {
             String relName = relInfo.getRelName();
-            String remoteTableClsName = toClassName(relInfo.getRemoteTable());
+            String remoteTableClsName = toClassName(tableInfo.getRemoteTable(relInfo));
 
             switch (relInfo.getRelType()) {
                 case ARR_REL:
@@ -303,15 +308,18 @@ public class GenerationUtil {
     }
 
     public static DBInfo fetchDBInfo(
-            String url, String dbPrefix, String adminAPIKey) throws IOException {
+                                     String url, String dbPrefix, String adminAPIKey) throws IOException {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+
         OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(logging)
             .build();
+        String requestBody = new Scanner( GenerationUtil.class.getResourceAsStream("/metadata_query.json")).useDelimiter("\\A").next();
+        RequestBody body = RequestBody.create(JSON, requestBody);
         Request request = new Request.Builder()
-                .url(url + dbPrefix + "/table")
-                .header("Authorization", "Hasura " + adminAPIKey)
-                .get()
+                .url(url + dbPrefix + "/v1/query")
+                .header("Authorization", "Bearer " + adminAPIKey)
+                .post(body)
                 .build();
         Response response = client.newCall(request).execute();
         String respStr = response.body().string();
@@ -351,8 +359,9 @@ public class GenerationUtil {
         }
     }
 
-    public static void generate(Configuration cfg) throws IOException {
-        DBInfo dbInfo = fetchDBInfo(cfg.getDBUrl(), cfg.getDBPrefix(), cfg.getAdminAPIKey());
+    public static void generate(Configuration cfg) throws IOException, UnexpectedSchema {
+        DBInfo dbInfo = dbInfo =
+            fetchDBInfo(cfg.getDBUrl(), cfg.getDBPrefix(), cfg.getAdminAPIKey());
 
         File dbDir = new File(cfg.getDir());
         File tablesDir = new File(dbDir, "tables");
@@ -382,7 +391,9 @@ public class GenerationUtil {
         for (TableInfo tableInfo : dbInfo.getTables()) {
             tableNames.add(tableInfo.getTableName());
             System.out.println(tableInfo.getTableName());
+            System.out.println("Generating table");
             generateTable(tablesDir, cfg.getPackageName(), tableInfo);
+            System.out.println("Generating record");
             generateRecord(recordsDir, cfg.getPackageName(), tableInfo);
         }
         generateTablesJava(cfg.getDir(), cfg.getPackageName(), tableNames);

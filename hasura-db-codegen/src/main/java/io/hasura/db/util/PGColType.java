@@ -25,7 +25,7 @@ public enum PGColType {
     @SerializedName("boolean")
     PG_BOOLEAN("Boolean"),
 
-    @SerializedName("varchar")
+    @SerializedName("character varying")
     PG_VARCHAR("String"),
 
     @SerializedName("text")
@@ -34,10 +34,10 @@ public enum PGColType {
     @SerializedName("date")
     PG_DATE("Date"),
 
-    @SerializedName("timestamptz")
+    @SerializedName("timestamptz with time zone")
     PG_TIMESTAMPTZ("Timestamp"),
 
-    @SerializedName("timetz")
+    @SerializedName("time with time zone")
     PG_TIMETZ("Time"),
 
     @SerializedName("jsonb")

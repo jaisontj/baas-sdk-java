@@ -3,20 +3,17 @@ package io.hasura.db.util;
 import com.google.gson.annotations.SerializedName;
 
 public class RelInfo {
-    @SerializedName("type")
+    @SerializedName("rel_type")
     private RelType relType;
 
-    @SerializedName("rtable")
-    private String remoteTable;
-    @SerializedName("name")
+    @SerializedName("rel_def")
+    public RelDef relDef;
+
+    @SerializedName("rel_name")
     private String relName;
 
     public RelType getRelType() {
         return this.relType;
-    }
-
-    public String getRemoteTable() {
-        return this.remoteTable;
     }
 
     public String getRelName() {

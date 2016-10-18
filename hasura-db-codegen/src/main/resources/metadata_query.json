@@ -1,0 +1,11 @@
+{
+    "type" : "select",
+    "args" : {
+        "table" : "hdb_table",
+        "schema" : "hdb_catalog",
+        "columns" : ["*.*"],
+        "where" : {
+            "table_schema" : "public"
+        }
+    }
+}

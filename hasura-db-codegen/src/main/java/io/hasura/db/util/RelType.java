@@ -3,9 +3,9 @@ package io.hasura.db.util;
 import com.google.gson.annotations.SerializedName;
 
 public enum RelType {
-    @SerializedName("arr_rel")
+    @SerializedName("array")
     ARR_REL,
 
-    @SerializedName("obj_rel")
+    @SerializedName("object")
     OBJ_REL;
 }

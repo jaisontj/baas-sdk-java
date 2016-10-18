@@ -3,9 +3,9 @@ package io.hasura.db.util;
 import com.google.gson.annotations.SerializedName;
 
 public class PGColInfo {
-    @SerializedName("type")
+    @SerializedName("data_type")
     private PGColType colType;
-    @SerializedName("name")
+    @SerializedName("column_name")
     private String colName;
 
     public PGColInfo(PGColType colType, String colName) {

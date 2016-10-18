@@ -7,7 +7,7 @@ import java.io.IOException;
 public class TestGeneration {
 
     @Test
-    public void run() throws IOException {
+    public void run() throws IOException, UnexpectedSchema {
 
         Configuration cfg = new Configuration();
         cfg.setDir("ws");
