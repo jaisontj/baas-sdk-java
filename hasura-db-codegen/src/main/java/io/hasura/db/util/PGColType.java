@@ -34,7 +34,7 @@ public enum PGColType {
     @SerializedName("date")
     PG_DATE("Date"),
 
-    @SerializedName("timestamptz with time zone")
+    @SerializedName("timestamp with time zone")
     PG_TIMESTAMPTZ("Timestamp"),
 
     @SerializedName("time with time zone")
