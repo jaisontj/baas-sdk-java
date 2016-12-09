@@ -1,8 +1,10 @@
 {
     "type" : "select",
     "args" : {
-        "table" : "hdb_table",
-        "schema" : "hdb_catalog",
+        "table" : {
+            "name": "hdb_table",
+            "schema" : "hdb_catalog"
+        },
         "columns" : ["*.*"],
         "where" : {
             "table_schema" : "public"
