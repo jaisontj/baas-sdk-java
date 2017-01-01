@@ -112,8 +112,8 @@ public class Hasura {
             .addInterceptor(logging)
             .build();
 
-        Hasura.auth = new AuthService("http://auth.myproject.hasura-app.io", c);
-        Hasura.db = new DBService("http://data.myproject.hasura-app.io/api/1", "", c);
+        Hasura.auth = new AuthService("https://auth.myproject.hasura-app.io", c);
+        Hasura.db = new DBService("https://data.myproject.hasura-app.io/api/1", "", c);
     }
 
     public static Integer getCurrentUserId() {
