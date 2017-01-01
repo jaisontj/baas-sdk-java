@@ -186,3 +186,10 @@ public class HasuraTokenInterceptor implements Interceptor {
     }
 }
 ```
+
+To install LetsEncrypt certificates
+```
+$ wget https://gist.githubusercontent.com/Firefishy/109b0f1a90156f6c933a50fe40aa777e/raw/15926be913682876ae68bb4f71e489bc53feaae3/install-letsencrypt-in-jdk.sh
+$ chmod +x install-letsencrypt-in-jdk.sh
+$ sudo ./install-letsencrypt-in-jdk.sh /usr/downloads/android-studio/jre
+```
