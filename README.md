@@ -19,7 +19,7 @@ Add the following code to your build.gradle (at a module level, not necessarily 
 ``build.gradle``
 ```
 dependencies {
-   compile 'com.github.hasura:baas-sdk-java:617ac3b58c'
+   compile 'com.github.hasura:baas-sdk-java:c679f89879'
 }
 ...
 
@@ -29,7 +29,7 @@ buildscript {
          maven { url "https://jitpack.io" }
    }
    dependencies {
-      classpath 'com.github.hasura.baas-sdk-java:hasura-db-codegen:617ac3b58c'
+      classpath 'com.github.hasura.baas-sdk-java:hasura-db-codegen:c679f89879'
    }
 }
 
@@ -64,7 +64,7 @@ be appropriate.
 
 ``hasura.properties``
 ```
-url=http://<YOUR-HASURA-PROJECT-IP>/data
+url=https://data.<project-name>.hasura-app.io
 adminAPIKey=<YOUR-VALID-HASURA-ADMIN-TOKEN>
 package=com.myapp.db
 dbprefix=
